@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
-            android:background="@color/lightGray"
+            android:background="@android:color/white"
             android:paddingTop="@dimen/product_list_vertical_padding"
             android:paddingBottom="@dimen/product_list_vertical_padding"
             app:layout_constraintBottom_toBottomOf="parent"
