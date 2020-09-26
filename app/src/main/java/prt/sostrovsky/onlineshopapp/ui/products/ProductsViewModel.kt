@@ -1,9 +1,13 @@
 package prt.sostrovsky.onlineshopapp.ui.products
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import prt.sostrovsky.onlineshopapp.repository.ProductRepository
 
 class ProductsViewModel :  ViewModel() {
     /**
@@ -16,15 +20,15 @@ class ProductsViewModel :  ViewModel() {
      */
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-//    private val _appInitComplete = MutableLiveData<Boolean>()
-//    val appInitComplete: LiveData<Boolean>
-//        get() = _appInitComplete
+    fun fetchProducts() : LiveData<List<String>> {
+        val products = MutableLiveData<List<String>>()
 
-//    init {
-//        viewModelScope.launch {
-//            _appInitComplete.value = Repository.init()
-//        }
-//    }
+        viewModelScope.launch {
+            products.value = ProductRepository.getProducts()
+        }
+
+        return products
+    }
 
     /**
      * Cancel all coroutines when the ViewModel is cleared

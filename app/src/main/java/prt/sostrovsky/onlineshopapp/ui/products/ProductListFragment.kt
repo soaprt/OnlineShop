@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.databinding.FragmentProductListBinding
+import timber.log.Timber
 
 class ProductListFragment : Fragment() {
     private lateinit var binding: FragmentProductListBinding
@@ -26,5 +28,10 @@ class ProductListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ProductsViewModel::class.java)
+
+        viewModel.fetchProducts().observe(viewLifecycleOwner, Observer {products ->
+            Timber.e("ProductListFragment: fetchProducts:" +
+                    "\nresutt: $products")
+        })
     }
 }
