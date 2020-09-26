@@ -42,31 +42,6 @@ class ProductListAdapter(private val tickets: ArrayList<ProductDTO>) :
             view.lblProductShortDescription.text = product.shortDescription
             view.lblProductNewPrice.text = product.newPrice
             view.lblProductOldPrice.text = product.oldPrice
-
-            // $price,- (price + salePercent)  $900,- 1100
-
-
-
-            /*[
-                {
-                    "id": 1,
-                    "title": "Apple Iphone X",
-                    "short_description": "ios, ecran tactil 5.8'', GPS, 64Gb",
-                    "image": "https://images-na.ssl-images-amazon.com/images/I/61lMn0%2BjtRL._SY355_.jpg",
-                    "price": 900,
-                    "sale_precent": 2,
-                    "details": "* foarte bun\\n * ciotkii"
-                }
-            ]*/
-
-
-//            view.lblDepartureDate.text = (view.context.getText(R.string.label_departure_date)
-//                    as String).format(view.context.getText(R.string.departure_date))
-//            view.departureDate.text = ticket.departureDate
-//            view.departureFromTo.text = ticket.departureFromTo
-//            view.departureTime.text = ticket.departureTime
-//            view.carrierName.text = ticket.carrierName
-//            view.flightPrice.text = ticket.flightPrice
         }
     }
 }

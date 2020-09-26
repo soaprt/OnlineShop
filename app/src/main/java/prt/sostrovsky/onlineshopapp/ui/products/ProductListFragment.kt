@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.fragment_product_list.*
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.databinding.FragmentProductListBinding
 import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
-import timber.log.Timber
+
 
 class ProductListFragment : Fragment() {
     private lateinit var binding: FragmentProductListBinding
@@ -33,8 +33,6 @@ class ProductListFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(ProductsViewModel::class.java)
 
         viewModel.fetchProducts().observe(viewLifecycleOwner, Observer {products ->
-//            Timber.e("ProductListFragment: fetchProducts:" +
-//                    "\nresutt: $products")
             setRecyclerView(products)
         })
     }
