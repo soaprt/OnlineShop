@@ -1,13 +1,13 @@
 package prt.sostrovsky.onlineshopapp.network
 
+import kotlinx.coroutines.Deferred
+import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
+import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Query
+
 interface ProductsService {
-    /*@GET("autosuggest/{version}/{country}/{currency}/{locale}")
-    fun fetchPlacesAsync(
-        @Path("version") version: String,
-        @Path("country") country: String,
-        @Path("currency") currency: String,
-        @Path("locale") locale: String,
-        @Query("query") query: String,
-        @Query("apikey") apiKey: String
-    ): Deferred<Response<PlaceDTO>>*/
+    @GET("products")
+    fun fetchProductsAsync(@Query("offset") offset: Int, @Query("limit") limit: Int) :
+            Deferred<Response<List<ProductDTO>>>
 }

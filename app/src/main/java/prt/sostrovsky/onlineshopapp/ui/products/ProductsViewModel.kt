@@ -7,9 +7,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
 import prt.sostrovsky.onlineshopapp.repository.ProductRepository
 
 class ProductsViewModel :  ViewModel() {
+
     /**
     * The job for all coroutines started by this ViewModel.
     */
@@ -20,11 +22,11 @@ class ProductsViewModel :  ViewModel() {
      */
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    fun fetchProducts() : LiveData<List<String>> {
-        val products = MutableLiveData<List<String>>()
+    fun fetchProducts() : LiveData<List<ProductDTO>> {
+        val products = MutableLiveData<List<ProductDTO>>()
 
         viewModelScope.launch {
-            products.value = ProductRepository.getProducts()
+            products.value = ProductRepository.getProducts(0, 10)
         }
 
         return products
