@@ -25,6 +25,7 @@ data class ProductDTO(val id: Int,
 
     override fun toString(): String {
         return "ProductDTO(id=$id, title='$title', shortDescription='$shortDescription', " +
-                "imageUrl='$imageUrl', price=$price, salePercent=$salePercent, details='$details')"
+                "imageUrl='$imageUrl', price=$price, salePercent=$salePercent, details='$details'," +
+                "newPrice='$newPrice', oldPrice='$oldPrice')"
     }
 }
