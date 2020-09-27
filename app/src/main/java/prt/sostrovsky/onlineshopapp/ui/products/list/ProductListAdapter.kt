@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.ui.products
+package prt.sostrovsky.onlineshopapp.ui.products.list
 
 import android.text.Spannable
 import android.text.Spanned
@@ -24,7 +24,9 @@ class ProductListAdapter(private val products: ArrayList<ProductDTO>) :
         viewType: Int
     ): ProductHolder {
         val inflatedView = parent.inflate(R.layout.product_list_item_row, false)
-        return ProductHolder(inflatedView).apply {
+        return ProductHolder(
+            inflatedView
+        ).apply {
             itemClick = { productId ->
                 this@ProductListAdapter.itemClick?.invoke(productId)
             }

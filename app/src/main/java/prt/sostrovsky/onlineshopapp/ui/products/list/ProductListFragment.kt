@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.ui.products
+package prt.sostrovsky.onlineshopapp.ui.products.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +13,8 @@ import kotlinx.android.synthetic.main.fragment_product_list.*
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.databinding.FragmentProductListBinding
 import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
+import prt.sostrovsky.onlineshopapp.ui.MainActivity
+import prt.sostrovsky.onlineshopapp.ui.products.ProductsViewModel
 
 class ProductListFragment : Fragment() {
     private lateinit var binding: FragmentProductListBinding
@@ -40,10 +42,19 @@ class ProductListFragment : Fragment() {
         val linearLayoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = linearLayoutManager
 
-        val adapter = ProductListAdapter(tickets as ArrayList<ProductDTO>).apply {
-            itemClick = { productId -> }
+        val adapter = ProductListAdapter(
+            tickets as ArrayList<ProductDTO>
+        ).apply {
+            itemClick = { productId ->
+                showProduct(productId)
+            }
         }
         recyclerView.adapter = adapter
         adapter.notifyItemInserted(tickets.size - 1)
+    }
+
+    private fun showProduct(productId: Int) {
+        val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailsFragment(productId)
+        (activity as MainActivity).moveTo(action)
     }
 }
