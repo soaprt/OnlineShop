@@ -9,9 +9,19 @@ object ProductRepository {
         val products = mutableListOf<ProductDTO>()
 
         withContext(Dispatchers.IO) {
-            products.addAll(ProductsFactory.getFactory().fetch(offset, limit))
+            products.addAll(ProductsFactory.getFactory().fetchProducts(offset, limit))
         }
 
         return products
+    }
+
+    suspend fun getProductBy(id: Int): ProductDTO? {
+        var product: ProductDTO? = null
+
+        withContext(Dispatchers.IO) {
+            product = ProductsFactory.getFactory().fetchProductBy(id)
+        }
+
+        return product
     }
 }

@@ -10,4 +10,7 @@ interface ProductsService {
     @GET("products")
     fun fetchProductsAsync(@Query("offset") offset: Int, @Query("limit") limit: Int) :
             Deferred<Response<List<ProductDTO>>>
+
+    @GET("product")
+    fun fetchProductAsync(@Query("id") id: Int): Deferred<Response<ProductDTO>>
 }

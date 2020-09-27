@@ -1,6 +1,8 @@
 package prt.sostrovsky.onlineshopapp.network.response
 
 import com.google.gson.annotations.SerializedName
+import kotlin.math.roundToInt
+
 
 data class ProductDTO(val id: Int,
                       val title: String,
@@ -14,13 +16,16 @@ data class ProductDTO(val id: Int,
                       val details: String) {
 
     val newPrice: String
-    get() = "$$price,-"
+    get() = "$$price${if (salePercent > 0) ",-" else ""}"
+
 
     val oldPrice: String
-    get() = "${getOldPrice()}"
+    get() = if (salePercent > 0) "${getOldPrice()}" else ""
+
 
     private fun getOldPrice(): Int {
-        return (price + (price / 100) * salePercent)
+        val percent = (price.toDouble() / 100)
+        return  (price + (percent * salePercent)).roundToInt()
     }
 
     override fun toString(): String {

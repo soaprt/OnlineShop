@@ -9,6 +9,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
 import prt.sostrovsky.onlineshopapp.repository.ProductRepository
+import timber.log.Timber
 
 class ProductsViewModel :  ViewModel() {
 
@@ -21,6 +22,16 @@ class ProductsViewModel :  ViewModel() {
      * This is the main scope for all coroutines launched by MainViewModel.
      */
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+    fun fetchProduct(id: Int) : LiveData<ProductDTO> {
+        val product = MutableLiveData<ProductDTO>()
+
+        viewModelScope.launch {
+            product.value = ProductRepository.getProductBy(id)
+        }
+
+        return product
+    }
 
     fun fetchProducts() : LiveData<List<ProductDTO>> {
         val products = MutableLiveData<List<ProductDTO>>()
