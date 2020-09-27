@@ -33,6 +33,14 @@ class ProductListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ProductsViewModel::class.java)
 
+        viewModel.webServiceIsUnavailable.observe(viewLifecycleOwner, Observer {
+            webServiceIsUnavailable -> if (webServiceIsUnavailable) {
+                (activity as MainActivity).showSnackBarEvent(
+                    getString(R.string.web_service_unavailable_error)
+                )
+            }
+        })
+
         viewModel.fetchProducts().observe(viewLifecycleOwner, Observer {products ->
             setRecyclerView(products)
         })

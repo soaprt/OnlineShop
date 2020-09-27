@@ -7,9 +7,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import prt.sostrovsky.onlineshopapp.network.WebServiceUnavailableException
 import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
 import prt.sostrovsky.onlineshopapp.repository.ProductRepository
-import timber.log.Timber
 
 class ProductsViewModel :  ViewModel() {
 
@@ -22,6 +22,8 @@ class ProductsViewModel :  ViewModel() {
      * This is the main scope for all coroutines launched by MainViewModel.
      */
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+    val webServiceIsUnavailable = MutableLiveData<Boolean>(false)
 
     fun fetchProduct(id: Int) : LiveData<ProductDTO> {
         val product = MutableLiveData<ProductDTO>()
@@ -37,7 +39,12 @@ class ProductsViewModel :  ViewModel() {
         val products = MutableLiveData<List<ProductDTO>>()
 
         viewModelScope.launch {
-            products.value = ProductRepository.getProducts(0, 10)
+            try {
+                products.value = ProductRepository.getProducts(0, 10)
+                webServiceIsUnavailable.value = false
+            } catch (ex: WebServiceUnavailableException) {
+                webServiceIsUnavailable.value = true
+            }
         }
 
         return products
