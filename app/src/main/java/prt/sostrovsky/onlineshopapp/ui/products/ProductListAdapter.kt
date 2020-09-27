@@ -1,8 +1,12 @@
 package prt.sostrovsky.onlineshopapp.ui.products
 
+import android.text.Spannable
+import android.text.Spanned
+import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -41,7 +45,15 @@ class ProductListAdapter(private val tickets: ArrayList<ProductDTO>) :
             view.lblProductTitle.text = product.title
             view.lblProductShortDescription.text = product.shortDescription
             view.lblProductNewPrice.text = product.newPrice
-            view.lblProductOldPrice.text = product.oldPrice
+
+            strikeLineThrough(view.lblProductOldPrice, product.oldPrice)
+        }
+
+        private fun strikeLineThrough(textView: TextView, text: String) {
+            textView.setText(text, TextView.BufferType.SPANNABLE)
+            val spannable = textView.text as Spannable
+            spannable.setSpan(StrikethroughSpan(),0, text.length,
+                Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
         }
     }
 }
