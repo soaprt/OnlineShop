@@ -14,38 +14,46 @@ import kotlinx.android.synthetic.main.product_list_item_row.view.*
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
 
-class ProductListAdapter(private val tickets: ArrayList<ProductDTO>) :
+class ProductListAdapter(private val products: ArrayList<ProductDTO>) :
     RecyclerView.Adapter<ProductListAdapter.ProductHolder>() {
+
+    var itemClick: ((Int) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ProductHolder {
         val inflatedView = parent.inflate(R.layout.product_list_item_row, false)
-        return ProductHolder(inflatedView)
+        return ProductHolder(inflatedView).apply {
+            itemClick = { productId ->
+                this@ProductListAdapter.itemClick?.invoke(productId)
+            }
+        }
     }
 
-    override fun getItemCount(): Int = tickets.size
+    override fun getItemCount(): Int = products.size
 
     override fun onBindViewHolder(holder: ProductHolder, position: Int) {
-        val itemTicket = tickets[position]
-        holder.bindTicket(itemTicket)
+        val itemProduct = products[position]
+        holder.bindView(itemProduct)
     }
 
-    class ProductHolder(v: View) : RecyclerView.ViewHolder(v) {
-        private var view: View = v
-        private var product: ProductDTO? = null
+    class ProductHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var itemClick: ((Int) -> Unit)? = null
 
-        fun bindTicket(product: ProductDTO) {
-            this.product = product
+        fun bindView(product: ProductDTO) {
             Picasso.get()
                 .load(product.imageUrl)
                 .placeholder(R.drawable.ic_placeholder)
-                .into(view.ivProductImage)
-            view.lblProductTitle.text = product.title
-            view.lblProductShortDescription.text = product.shortDescription
-            view.lblProductNewPrice.text = product.newPrice
-            strikeLineThrough(view.lblProductOldPrice, product.oldPrice)
+                .into(itemView.ivProductImage)
+            itemView.lblProductTitle.text = product.title
+            itemView.lblProductShortDescription.text = product.shortDescription
+            itemView.lblProductNewPrice.text = product.newPrice
+            strikeLineThrough(itemView.lblProductOldPrice, product.oldPrice)
+
+            itemView.setOnClickListener {
+                itemClick?.invoke(product.id)
+            }
         }
 
         private fun strikeLineThrough(textView: TextView, text: String) {

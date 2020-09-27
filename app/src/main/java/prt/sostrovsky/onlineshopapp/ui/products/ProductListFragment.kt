@@ -14,7 +14,6 @@ import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.databinding.FragmentProductListBinding
 import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
 
-
 class ProductListFragment : Fragment() {
     private lateinit var binding: FragmentProductListBinding
     private lateinit var viewModel: ProductsViewModel
@@ -41,7 +40,9 @@ class ProductListFragment : Fragment() {
         val linearLayoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = linearLayoutManager
 
-        val adapter = ProductListAdapter(tickets as ArrayList<ProductDTO>)
+        val adapter = ProductListAdapter(tickets as ArrayList<ProductDTO>).apply {
+            itemClick = { productId -> }
+        }
         recyclerView.adapter = adapter
         adapter.notifyItemInserted(tickets.size - 1)
     }
