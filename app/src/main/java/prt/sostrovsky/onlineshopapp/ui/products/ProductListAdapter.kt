@@ -45,7 +45,6 @@ class ProductListAdapter(private val tickets: ArrayList<ProductDTO>) :
             view.lblProductTitle.text = product.title
             view.lblProductShortDescription.text = product.shortDescription
             view.lblProductNewPrice.text = product.newPrice
-
             strikeLineThrough(view.lblProductOldPrice, product.oldPrice)
         }
 

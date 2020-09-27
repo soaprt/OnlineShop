@@ -1,10 +1,7 @@
 package prt.sostrovsky.onlineshopapp.network.response
 
-import android.text.Spannable
-import android.text.Spanned
-import android.text.style.StrikethroughSpan
-import android.widget.TextView
 import com.google.gson.annotations.SerializedName
+import kotlin.math.roundToInt
 
 
 data class ProductDTO(val id: Int,
@@ -27,7 +24,8 @@ data class ProductDTO(val id: Int,
 
 
     private fun getOldPrice(): Int {
-        return (price + (price / 100) * salePercent)
+        val percent = (price.toDouble() / 100)
+        return  (price + (percent * salePercent)).roundToInt()
     }
 
     override fun toString(): String {
