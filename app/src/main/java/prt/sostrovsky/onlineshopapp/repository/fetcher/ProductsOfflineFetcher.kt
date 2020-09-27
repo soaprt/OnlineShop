@@ -4,7 +4,11 @@ import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
 
 object ProductsOfflineFetcher :
     ProductsFetcher {
-    override suspend fun fetch(offset: Int, limit: Int) : List<ProductDTO> {
+    override suspend fun fetchProducts(offset: Int, limit: Int): List<ProductDTO> {
         return emptyList()
+    }
+
+    override suspend fun fetchProductBy(id: Int): ProductDTO? {
+        return null
     }
 }

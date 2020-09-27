@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.databinding.FragmentProductDetailsBinding
+import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
 import prt.sostrovsky.onlineshopapp.ui.products.ProductsViewModel
+import timber.log.Timber
 
 class ProductDetailsFragment: Fragment() {
     private lateinit var binding: FragmentProductDetailsBinding
@@ -30,6 +33,13 @@ class ProductDetailsFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ProductsViewModel::class.java)
 
-        viewModel.fetchProduct(passedArgs.productId)
+        viewModel.fetchProduct(passedArgs.productId).observe(viewLifecycleOwner, Observer {
+            product ->  product?.let { show(it) }
+        })
+    }
+
+    private fun show(product: ProductDTO) {
+        Timber.e("ProductDetailsFragment: show():" +
+                "\nproduct: $product")
     }
 }

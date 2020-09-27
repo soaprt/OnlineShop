@@ -23,9 +23,14 @@ class ProductsViewModel :  ViewModel() {
      */
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    fun fetchProduct(productId: Int) {
-        Timber.e("ProductsViewModel: fetchProduct():" +
-                "\n\tproductId: $productId")
+    fun fetchProduct(id: Int) : LiveData<ProductDTO> {
+        val product = MutableLiveData<ProductDTO>()
+
+        viewModelScope.launch {
+            product.value = ProductRepository.getProductBy(id)
+        }
+
+        return product
     }
 
     fun fetchProducts() : LiveData<List<ProductDTO>> {
