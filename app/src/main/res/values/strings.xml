@@ -1,6 +1,7 @@
 <resources>
     <string name="app_logo">Logo of the application</string>
     <string name="app_name">OnlineShopApp</string>
+    <string name="arrow_back">Arrow back</string>
     <string name="label_no_data">-no data-</string>
     <string name="msg_product_not_found">No product is found.</string>
     <string name="msg_you_are_offline">You are in offline mode.</string>

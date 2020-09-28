@@ -2,6 +2,7 @@
 <androidx.appcompat.widget.Toolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
@@ -9,16 +10,38 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
+    android:padding="0dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/toolbarContainer"
+        android:id="@+id/clToolbarContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/indent_8dp">
 
+        <FrameLayout
+            android:id="@+id/flToolbarLeftButton"
+            android:layout_width="@dimen/toolbar_button_size"
+            android:layout_height="@dimen/toolbar_button_size"
+            android:padding="@dimen/indent_8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/ivArrowBack"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_arrow_back"
+                android:visibility="invisible"
+                android:clickable="false"
+                android:contentDescription="@string/arrow_back"
+                tools:visibility="visible"/>
+
+        </FrameLayout>
+
         <ImageView
-            android:id="@+id/app_logo"
+            android:id="@+id/ivAppLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/app_logo"

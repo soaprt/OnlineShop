@@ -20,5 +20,10 @@ class MainActivity : BaseActivity(R.id.rootLayout) {
     private fun setToolBar() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+        setToolbarButtons()
+    }
+
+    private fun setToolbarButtons() {
+        toolbarBackButton = findViewById(R.id.ivArrowBack)
     }
 }
