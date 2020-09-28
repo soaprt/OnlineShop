@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:paddingStart="@dimen/indent_8dp"
-        android:paddingTop="@dimen/indent_4dp"
-        android:paddingEnd="@dimen/indent_8dp"
-        android:paddingBottom="@dimen/indent_8dp">
+        android:padding="@dimen/indent_8dp">
 
         <include
             android:id="@+id/clProductShortData"
@@ -31,23 +31,18 @@
             app:layout_constraintTop_toBottomOf="@+id/clProductShortData"
             tools:text="@string/information" />
 
-        <ScrollView
-            android:id="@+id/svDescriptionBody"
+        <TextView
+            android:id="@+id/lblDescriptionBody"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/indent_8dp"
+            android:layout_marginBottom="@dimen/indent_8dp"
             app:layout_constraintBottom_toTopOf="@+id/btnAddToCart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lblDescriptionHeader">
-
-            <TextView
-                android:id="@+id/lblDescriptionBody"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="@string/label_no_data" />
-
-        </ScrollView>
+            app:layout_constraintTop_toBottomOf="@+id/lblDescriptionHeader"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="@string/label_no_data" />
 
         <Button
             android:id="@+id/btnAddToCart"
@@ -61,8 +56,7 @@
             app:layout_constraintEnd_toStartOf="@+id/btnBuyNow"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/svDescriptionBody" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btnBuyNow"
@@ -75,8 +69,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btnAddToCart"
-            app:layout_constraintTop_toBottomOf="@+id/svDescriptionBody" />
+            app:layout_constraintStart_toEndOf="@+id/btnAddToCart" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</ScrollView>

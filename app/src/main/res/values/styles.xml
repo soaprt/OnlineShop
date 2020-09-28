@@ -9,7 +9,6 @@
     </style>
 
     <style name="ButtonStyle">
-        <item name="android:layout_marginTop">@dimen/indent_8dp</item>
         <item name="android:padding">@dimen/indent_8dp</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
