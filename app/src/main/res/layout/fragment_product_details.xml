@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:padding="@dimen/indent_8dp">
+        android:padding="@dimen/indent_16dp">
 
         <include
             android:id="@+id/clProductShortData"
@@ -21,9 +21,10 @@
 
         <TextView
             android:id="@+id/lblDescriptionHeader"
+            style="@style/TitleTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/indent_16dp"
+            android:layout_marginTop="@dimen/indent_32dp"
             android:text="@string/information"
             android:textAllCaps="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,6 +34,7 @@
 
         <TextView
             android:id="@+id/lblDescriptionBody"
+            style="@style/DescriptionTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/indent_8dp"

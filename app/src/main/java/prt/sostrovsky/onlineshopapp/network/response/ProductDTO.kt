@@ -4,28 +4,30 @@ import com.google.gson.annotations.SerializedName
 import kotlin.math.roundToInt
 
 
-data class ProductDTO(val id: Int,
-                      val title: String,
-                      @SerializedName("short_description")
-                      val shortDescription: String,
-                      @SerializedName("image")
-                      val imageUrl: String,
-                      val price: Int,
-                      @SerializedName("sale_precent")
-                      val salePercent: Int = 0,
-                      val details: String) {
+data class ProductDTO(
+    val id: Int,
+    val title: String,
+    @SerializedName("short_description")
+    val shortDescription: String,
+    @SerializedName("image")
+    val imageUrl: String,
+    val price: Int,
+    @SerializedName("sale_precent")
+    val salePercent: Int = 0,
+    val details: String
+) {
 
     val newPrice: String
-    get() = "$$price${if (salePercent > 0) ",-" else ""}"
+        get() = "$ $price${if (salePercent > 0) ",-" else ""}"
 
 
     val oldPrice: String
-    get() = if (salePercent > 0) "${getOldPrice()}" else ""
+        get() = if (salePercent > 0) "$ ${getOldPrice()},-" else ""
 
 
     private fun getOldPrice(): Int {
         val percent = (price.toDouble() / 100)
-        return  (price + (percent * salePercent)).roundToInt()
+        return (price + (percent * salePercent)).roundToInt()
     }
 
     override fun toString(): String {
