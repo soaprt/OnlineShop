@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.product_list_item_row.view.*
+import kotlinx.android.synthetic.main.product_short_data.view.*
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
 
@@ -23,7 +23,7 @@ class ProductListAdapter(private val products: ArrayList<ProductDTO>) :
         parent: ViewGroup,
         viewType: Int
     ): ProductHolder {
-        val inflatedView = parent.inflate(R.layout.product_list_item_row, false)
+        val inflatedView = parent.inflate(R.layout.product_short_data, false)
         return ProductHolder(
             inflatedView
         ).apply {
@@ -61,8 +61,10 @@ class ProductListAdapter(private val products: ArrayList<ProductDTO>) :
         private fun strikeLineThrough(textView: TextView, text: String) {
             textView.setText(text, TextView.BufferType.SPANNABLE)
             val spannable = textView.text as Spannable
-            spannable.setSpan(StrikethroughSpan(),0, text.length,
-                Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+            spannable.setSpan(
+                StrikethroughSpan(), 0, text.length,
+                Spanned.SPAN_INCLUSIVE_EXCLUSIVE
+            )
         }
     }
 }

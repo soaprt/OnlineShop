@@ -11,11 +11,11 @@ import prt.sostrovsky.onlineshopapp.network.WebServiceUnavailableException
 import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
 import prt.sostrovsky.onlineshopapp.repository.ProductRepository
 
-class ProductsViewModel :  ViewModel() {
+class ProductsViewModel : ViewModel() {
 
     /**
-    * The job for all coroutines started by this ViewModel.
-    */
+     * The job for all coroutines started by this ViewModel.
+     */
     private val viewModelJob = SupervisorJob()
 
     /**
@@ -23,19 +23,22 @@ class ProductsViewModel :  ViewModel() {
      */
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
+    private val selectedProduct = MutableLiveData<ProductDTO>()
+    var selectedProductIsLoaded = false
+
     val webServiceIsUnavailable = MutableLiveData<Boolean>(false)
 
-    fun fetchProduct(id: Int) : LiveData<ProductDTO> {
-        val product = MutableLiveData<ProductDTO>()
-
-        viewModelScope.launch {
-            product.value = ProductRepository.getProductBy(id)
+    fun fetchProduct(id: Int): LiveData<ProductDTO> {
+        if (!selectedProductIsLoaded) {
+            viewModelScope.launch {
+                selectedProduct.value = ProductRepository.getProductBy(id)
+                selectedProductIsLoaded = true
+            }
         }
-
-        return product
+        return selectedProduct
     }
 
-    fun fetchProducts() : LiveData<List<ProductDTO>> {
+    fun fetchProducts(): LiveData<List<ProductDTO>> {
         val products = MutableLiveData<List<ProductDTO>>()
 
         viewModelScope.launch {

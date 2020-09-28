@@ -6,61 +6,77 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorAccent">
+        android:background="@android:color/white"
+        android:paddingStart="@dimen/indent_8dp"
+        android:paddingTop="@dimen/indent_4dp"
+        android:paddingEnd="@dimen/indent_8dp"
+        android:paddingBottom="@dimen/indent_8dp">
 
-        <ImageView
-            android:id="@+id/ivProductImage"
-            android:layout_width="@dimen/product_image_size"
-            android:layout_height="@dimen/product_image_size"
-            android:src="@drawable/ic_placeholder"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+        <include
+            android:id="@+id/clProductShortData"
+            layout="@layout/product_short_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/lblProductTitle"
+            android:id="@+id/lblDescriptionHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/label_no_data"
+            android:layout_marginTop="@dimen/indent_16dp"
+            android:text="@string/information"
+            android:textAllCaps="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivProductImage"
-            tools:text="@string/label_no_data" />
+            app:layout_constraintTop_toBottomOf="@+id/clProductShortData"
+            tools:text="@string/information" />
 
-        <TextView
-            android:id="@+id/lblProductShortDescription"
+        <ScrollView
+            android:id="@+id/svDescriptionBody"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/label_no_data"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/indent_8dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnAddToCart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lblProductTitle"
-            tools:text="@string/label_no_data" />
+            app:layout_constraintTop_toBottomOf="@+id/lblDescriptionHeader">
 
-        <TextView
-            android:id="@+id/lblProductNewPrice"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/lblDescriptionBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="@string/label_no_data" />
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btnAddToCart"
+            style="@style/ButtonStyle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/lblProductOldPrice"
+            android:layout_marginEnd="@dimen/indent_4dp"
+            android:background="@drawable/buy_button"
+            android:text="@string/add_to_cart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnBuyNow"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lblProductShortDescription"
-            tools:text="@string/label_no_data" />
+            app:layout_constraintTop_toBottomOf="@+id/svDescriptionBody" />
 
-        <TextView
-            android:id="@+id/lblProductOldPrice"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btnBuyNow"
+            style="@style/ButtonStyle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/indent_4dp"
-            android:paddingEnd="@dimen/indent_4dp"
+            android:layout_marginStart="@dimen/indent_4dp"
+            android:background="@drawable/cart_button"
+            android:text="@string/buy_now"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/lblProductNewPrice"
-            app:layout_constraintTop_toBottomOf="@+id/lblProductShortDescription" />
+            app:layout_constraintStart_toEndOf="@+id/btnAddToCart"
+            app:layout_constraintTop_toBottomOf="@+id/svDescriptionBody" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

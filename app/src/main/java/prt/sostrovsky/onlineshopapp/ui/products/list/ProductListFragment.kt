@@ -24,8 +24,10 @@ class ProductListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_list, container,
-            false)
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_product_list, container,
+            false
+        )
         return binding.root
     }
 
@@ -46,15 +48,17 @@ class ProductListFragment : Fragment() {
     private fun setViewModel() {
         viewModel = ViewModelProviders.of(this).get(ProductsViewModel::class.java)
 
-        viewModel.webServiceIsUnavailable.observe(viewLifecycleOwner, Observer {
-                webServiceIsUnavailable -> if (webServiceIsUnavailable) {
-            (activity as MainActivity).showSnackBarEvent(
-                getString(R.string.web_service_unavailable_error)
-            )
-        }
-        })
+        viewModel.webServiceIsUnavailable.observe(
+            viewLifecycleOwner,
+            Observer { webServiceIsUnavailable ->
+                if (webServiceIsUnavailable) {
+                    (activity as MainActivity).showSnackBarEvent(
+                        getString(R.string.web_service_unavailable_error)
+                    )
+                }
+            })
 
-        viewModel.fetchProducts().observe(viewLifecycleOwner, Observer {products ->
+        viewModel.fetchProducts().observe(viewLifecycleOwner, Observer { products ->
             setRecyclerView(products)
         })
     }
@@ -67,6 +71,7 @@ class ProductListFragment : Fragment() {
             tickets as ArrayList<ProductDTO>
         ).apply {
             itemClick = { productId ->
+                viewModel.selectedProductIsLoaded = false
                 showProduct(productId)
             }
         }
@@ -75,7 +80,10 @@ class ProductListFragment : Fragment() {
     }
 
     private fun showProduct(productId: Int) {
-        val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailsFragment(productId)
+        val action =
+            ProductListFragmentDirections.actionProductListFragmentToProductDetailsFragment(
+                productId
+            )
         (activity as MainActivity).moveTo(action)
     }
 }

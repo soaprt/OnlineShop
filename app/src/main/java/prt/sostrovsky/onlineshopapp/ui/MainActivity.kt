@@ -24,6 +24,6 @@ class MainActivity : BaseActivity(R.id.rootLayout) {
     }
 
     private fun setToolbarButtons() {
-        toolbarBackButton = findViewById(R.id.ivArrowBack)
+        toolbarBackButton = findViewById(R.id.flToolbarLeftButton)
     }
 }

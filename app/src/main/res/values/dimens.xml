@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="button_corner_radius">4dp</dimen>
     <dimen name="indent_4dp">4dp</dimen>
     <dimen name="indent_8dp">8dp</dimen>
     <dimen name="indent_16dp">16dp</dimen>

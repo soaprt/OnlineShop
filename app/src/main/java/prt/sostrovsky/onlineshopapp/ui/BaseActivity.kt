@@ -2,7 +2,7 @@ package prt.sostrovsky.onlineshopapp.ui
 
 import android.annotation.SuppressLint
 import android.view.View
-import android.widget.ImageView
+import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -14,7 +14,7 @@ import prt.sostrovsky.onlineshopapp.network.connection.NetworkConnection
 
 open class BaseActivity(private val rootLayoutId: Int) : AppCompatActivity() {
     lateinit var navController: NavController
-    lateinit var toolbarBackButton: ImageView
+    lateinit var toolbarBackButton: FrameLayout
 
     private var snackBarOffline: Snackbar? = null
     private var networkDisposable: Disposable? = null
@@ -31,14 +31,14 @@ open class BaseActivity(private val rootLayoutId: Int) : AppCompatActivity() {
     }
 
     @SuppressLint("CheckResult")
-    private fun networkStateSubscribe () {
+    private fun networkStateSubscribe() {
         networkDisposable = NetworkConnection.stateObservable.subscribe { it ->
             checkOffline(it)
         }
     }
 
     private fun checkOffline(isOffline: Boolean) {
-        when(isOffline) {
+        when (isOffline) {
             true -> hideShackBarOffline()
             false -> showShackBarOffline()
         }
@@ -51,15 +51,17 @@ open class BaseActivity(private val rootLayoutId: Int) : AppCompatActivity() {
     private fun showShackBarOffline() {
         val message = getString(R.string.msg_you_are_offline)
 
-        snackBarOffline = generateSnackBar(findViewById(rootLayoutId), message,
-            Snackbar.LENGTH_INDEFINITE)
+        snackBarOffline = generateSnackBar(
+            findViewById(rootLayoutId), message,
+            Snackbar.LENGTH_INDEFINITE
+        )
         snackBarOffline?.let {
             it.duration = Snackbar.LENGTH_INDEFINITE
             it.show()
         }
     }
 
-    private fun generateSnackBar(view: View, message: String, duration: Int) : Snackbar {
+    private fun generateSnackBar(view: View, message: String, duration: Int): Snackbar {
         val result = Snackbar.make(view, message, duration)
         val snackBarView: View = result.view
         snackBarView.setBackgroundColor(applicationContext.resources.getColor(R.color.colorPrimary))
