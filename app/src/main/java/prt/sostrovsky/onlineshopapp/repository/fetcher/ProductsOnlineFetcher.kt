@@ -1,12 +1,20 @@
 package prt.sostrovsky.onlineshopapp.repository.fetcher
 
 import prt.sostrovsky.onlineshopapp.network.WebService
+import prt.sostrovsky.onlineshopapp.network.WebServiceUnavailableException
 import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
 import prt.sostrovsky.onlineshopapp.network.response.safeApiCall
 
 object ProductsOnlineFetcher : ProductsFetcher {
-    override suspend fun fetchProducts(offset: Int, limit: Int): List<ProductDTO> {
-        return fetchProductsFromWebService(offset, limit) ?: emptyList()
+    override suspend fun fetchProducts(offset: Int, limit: Int): List<ProductDTO>  {
+        val result = mutableListOf<ProductDTO>()
+
+        try {
+            fetchProductsFromWebService(offset, limit)?.let { result.addAll(it) }
+        } catch (ex: Exception) {
+            throw WebServiceUnavailableException("ProductsOnlineFetcher: fetchProducts(): error")
+        }
+        return result
     }
 
     override suspend fun fetchProductBy(id: Int): ProductDTO? {

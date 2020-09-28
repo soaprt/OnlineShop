@@ -1,8 +1,8 @@
 package prt.sostrovsky.onlineshopapp.ui
 
 import android.os.Bundle
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
 import prt.sostrovsky.onlineshopapp.R
 
 class MainActivity : BaseActivity(R.id.rootLayout) {
@@ -10,10 +10,20 @@ class MainActivity : BaseActivity(R.id.rootLayout) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setNavController()
+        setToolBar()
     }
 
     private fun setNavController() {
         navController = this.findNavController(R.id.myNavHostFragment)
-        NavigationUI.setupActionBarWithNavController(this, navController)
+    }
+
+    private fun setToolBar() {
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        setToolbarButtons()
+    }
+
+    private fun setToolbarButtons() {
+        toolbarBackButton = findViewById(R.id.flToolbarLeftButton)
     }
 }

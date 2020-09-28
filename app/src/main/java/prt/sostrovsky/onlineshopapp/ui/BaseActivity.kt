@@ -1,10 +1,9 @@
 package prt.sostrovsky.onlineshopapp.ui
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.view.View
-import android.view.inputmethod.InputMethodManager
+import android.widget.FrameLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
@@ -15,6 +14,8 @@ import prt.sostrovsky.onlineshopapp.network.connection.NetworkConnection
 
 open class BaseActivity(private val rootLayoutId: Int) : AppCompatActivity() {
     lateinit var navController: NavController
+    lateinit var toolbarBackButton: FrameLayout
+
     private var snackBarOffline: Snackbar? = null
     private var networkDisposable: Disposable? = null
 
@@ -30,14 +31,14 @@ open class BaseActivity(private val rootLayoutId: Int) : AppCompatActivity() {
     }
 
     @SuppressLint("CheckResult")
-    private fun networkStateSubscribe () {
+    private fun networkStateSubscribe() {
         networkDisposable = NetworkConnection.stateObservable.subscribe { it ->
             checkOffline(it)
         }
     }
 
     private fun checkOffline(isOffline: Boolean) {
-        when(isOffline) {
+        when (isOffline) {
             true -> hideShackBarOffline()
             false -> showShackBarOffline()
         }
@@ -50,15 +51,17 @@ open class BaseActivity(private val rootLayoutId: Int) : AppCompatActivity() {
     private fun showShackBarOffline() {
         val message = getString(R.string.msg_you_are_offline)
 
-        snackBarOffline = generateSnackBar(findViewById(rootLayoutId), message,
-            Snackbar.LENGTH_INDEFINITE)
+        snackBarOffline = generateSnackBar(
+            findViewById(rootLayoutId), message,
+            Snackbar.LENGTH_INDEFINITE
+        )
         snackBarOffline?.let {
             it.duration = Snackbar.LENGTH_INDEFINITE
             it.show()
         }
     }
 
-    private fun generateSnackBar(view: View, message: String, duration: Int) : Snackbar {
+    private fun generateSnackBar(view: View, message: String, duration: Int): Snackbar {
         val result = Snackbar.make(view, message, duration)
         val snackBarView: View = result.view
         snackBarView.setBackgroundColor(applicationContext.resources.getColor(R.color.colorPrimary))
@@ -74,15 +77,25 @@ open class BaseActivity(private val rootLayoutId: Int) : AppCompatActivity() {
         generateSnackBar(findViewById(rootLayoutId), message, Snackbar.LENGTH_SHORT).show()
     }
 
-    fun hideSoftKeyboard(activity: Activity) {
-        activity.currentFocus?.let {
-            val inputMethodManager: InputMethodManager =
-                activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(activity.currentFocus!!.windowToken, 0)
+    fun moveTo(action: NavDirections) {
+        navController.navigate(action)
+    }
+
+    fun backButtonEnable(callback: OnBackPressedCallback) {
+        toolbarBackButton.apply {
+            visibility = View.VISIBLE
+            isClickable = true
+            setOnClickListener {
+                callback.handleOnBackPressed()
+            }
         }
     }
 
-    fun moveTo(action: NavDirections) {
-        navController.navigate(action)
+    fun backButtonDisable() {
+        toolbarBackButton.apply {
+            visibility = View.INVISIBLE
+            isClickable = false
+            setOnClickListener(null)
+        }
     }
 }

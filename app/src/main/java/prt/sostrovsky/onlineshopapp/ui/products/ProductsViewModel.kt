@@ -7,15 +7,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import prt.sostrovsky.onlineshopapp.network.WebServiceUnavailableException
 import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
 import prt.sostrovsky.onlineshopapp.repository.ProductRepository
-import timber.log.Timber
 
-class ProductsViewModel :  ViewModel() {
+class ProductsViewModel : ViewModel() {
 
     /**
-    * The job for all coroutines started by this ViewModel.
-    */
+     * The job for all coroutines started by this ViewModel.
+     */
     private val viewModelJob = SupervisorJob()
 
     /**
@@ -23,21 +23,31 @@ class ProductsViewModel :  ViewModel() {
      */
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    fun fetchProduct(id: Int) : LiveData<ProductDTO> {
-        val product = MutableLiveData<ProductDTO>()
+    private val selectedProduct = MutableLiveData<ProductDTO>()
+    var selectedProductIsLoaded = false
 
-        viewModelScope.launch {
-            product.value = ProductRepository.getProductBy(id)
+    val webServiceIsUnavailable = MutableLiveData<Boolean>(false)
+
+    fun fetchProduct(id: Int): LiveData<ProductDTO> {
+        if (!selectedProductIsLoaded) {
+            viewModelScope.launch {
+                selectedProduct.value = ProductRepository.getProductBy(id)
+                selectedProductIsLoaded = true
+            }
         }
-
-        return product
+        return selectedProduct
     }
 
-    fun fetchProducts() : LiveData<List<ProductDTO>> {
+    fun fetchProducts(): LiveData<List<ProductDTO>> {
         val products = MutableLiveData<List<ProductDTO>>()
 
         viewModelScope.launch {
-            products.value = ProductRepository.getProducts(0, 10)
+            try {
+                products.value = ProductRepository.getProducts(0, 10)
+                webServiceIsUnavailable.value = false
+            } catch (ex: WebServiceUnavailableException) {
+                webServiceIsUnavailable.value = true
+            }
         }
 
         return products
