@@ -63,10 +63,10 @@ class ProductDetailsFragment : Fragment() {
     private fun setViewModel() {
         viewModel = ViewModelProviders.of(this).get(ProductsViewModel::class.java)
 
-        viewModel.fetchProduct(passedArgs.productId)
-            .observe(viewLifecycleOwner, Observer { product ->
-                product?.let { show(it) }
-            })
+//        viewModel.fetchProduct(passedArgs.productId)
+//            .observe(viewLifecycleOwner, Observer { product ->
+//                product?.let { show(it) }
+//            })
     }
 
     private fun show(product: ProductDTO) {

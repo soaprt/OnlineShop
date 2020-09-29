@@ -4,6 +4,77 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import prt.sostrovsky.onlineshopapp.ui.products.ProductInjection
+import kotlinx.android.synthetic.main.fragment_product_list.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import prt.sostrovsky.onlineshopapp.R
+import prt.sostrovsky.onlineshopapp.ui.MainActivity
+import prt.sostrovsky.onlineshopapp.ui.products.ProductsViewModel
+
+@ExperimentalCoroutinesApi
+class ProductListFragment : Fragment() {
+    private lateinit var viewModel: ProductsViewModel
+    private val adapter = ProductPagingDataAdapter()
+
+    private var getProductsJob: Job? = null
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_product_list, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setViewModel()
+        setRecyclerView()
+        getProducts()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setToolbarButtons()
+    }
+
+    private fun setViewModel() {
+        viewModel = ViewModelProvider(this,
+            ProductInjection.provideViewModelFactory(requireContext()))
+            .get(ProductsViewModel::class.java)
+    }
+
+    private fun getProducts() {
+        // Make sure we cancel the previous job before creating a new one
+        getProductsJob?.cancel()
+        getProductsJob = lifecycleScope.launch {
+            viewModel.getProducts().collectLatest {
+                adapter.submitData(it)
+            }
+        }
+    }
+
+    private fun setToolbarButtons() {
+        (activity as MainActivity).backButtonDisable()
+    }
+
+    private fun setRecyclerView() {
+        val linearLayoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = linearLayoutManager
+        recyclerView.adapter = adapter
+    }
+}
+
+
+/*
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -87,3 +158,4 @@ class ProductListFragment : Fragment() {
         (activity as MainActivity).moveTo(action)
     }
 }
+ */
