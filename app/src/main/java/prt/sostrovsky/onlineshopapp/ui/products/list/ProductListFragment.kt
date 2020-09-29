@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.databinding.FragmentProductListBinding
-import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
+import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
 import prt.sostrovsky.onlineshopapp.ui.MainActivity
 import prt.sostrovsky.onlineshopapp.ui.products.ProductsViewModel
 

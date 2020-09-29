@@ -1,14 +1,15 @@
-package prt.sostrovsky.onlineshopapp.network
+package prt.sostrovsky.onlineshopapp.service
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import prt.sostrovsky.onlineshopapp.BuildConfig
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object WebService {
+    private const val BASE_URL = "http://mobile-test.devebs.net:5000/"
+
     private const val READ_TIMEOUT: Long = 20
     private const val WRITE_TIMEOUT: Long = 20
 
@@ -20,11 +21,12 @@ object WebService {
         .build()
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl(BuildConfig.BASE_URL)
+        .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .client(client)
         .build()
 
-    val productsService: ProductsService = retrofit.create(ProductsService::class.java)
+    val productsService: ProductService = retrofit.create(
+        ProductService::class.java)
 }

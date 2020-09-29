@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.network.response
+package prt.sostrovsky.onlineshopapp.service.response
 
 sealed class WebResponse <out T : Any> {
     data class Success<out T : Any>(val output : T) : WebResponse<T>()

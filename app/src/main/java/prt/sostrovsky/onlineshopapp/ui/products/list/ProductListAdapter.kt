@@ -6,13 +6,14 @@ import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.product_short_data.view.*
 import prt.sostrovsky.onlineshopapp.R
-import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
+import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
 
 class ProductListAdapter(private val products: ArrayList<ProductDTO>) :
     RecyclerView.Adapter<ProductListAdapter.ProductHolder>() {
@@ -40,14 +41,15 @@ class ProductListAdapter(private val products: ArrayList<ProductDTO>) :
         holder.bindView(itemProduct)
     }
 
-    class ProductHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ProductHolder(view: View) : RecyclerView.ViewHolder(view) {
         var itemClick: ((Int) -> Unit)? = null
+        private val imageView: ImageView = view.ivProductImage
 
         fun bindView(product: ProductDTO) {
-            Picasso.get()
+            Glide.with(imageView.context)
                 .load(product.imageUrl)
                 .placeholder(R.drawable.ic_placeholder)
-                .into(itemView.ivProductImage)
+                .into(imageView)
             itemView.lblProductTitle.text = product.title
             itemView.lblProductShortDescription.text = product.shortDescription
             itemView.lblProductNewPrice.text = product.newPrice

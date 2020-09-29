@@ -1,6 +1,6 @@
 package prt.sostrovsky.onlineshopapp.repository.fetcher
 
-import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
+import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
 
 object ProductsOfflineFetcher :
     ProductsFetcher {

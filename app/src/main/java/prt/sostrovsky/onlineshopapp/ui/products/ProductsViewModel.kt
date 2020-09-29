@@ -7,8 +7,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import prt.sostrovsky.onlineshopapp.network.WebServiceUnavailableException
-import prt.sostrovsky.onlineshopapp.network.response.ProductDTO
+import prt.sostrovsky.onlineshopapp.service.WebServiceUnavailableException
+import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
 import prt.sostrovsky.onlineshopapp.repository.ProductRepository
 
 class ProductsViewModel : ViewModel() {

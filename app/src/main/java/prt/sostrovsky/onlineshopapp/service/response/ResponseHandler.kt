@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.network.response
+package prt.sostrovsky.onlineshopapp.service.response
 
 import retrofit2.Response
 import timber.log.Timber

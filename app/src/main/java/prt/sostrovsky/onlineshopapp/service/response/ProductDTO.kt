@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.network.response
+package prt.sostrovsky.onlineshopapp.service.response
 
 import com.google.gson.annotations.SerializedName
 import kotlin.math.roundToInt
