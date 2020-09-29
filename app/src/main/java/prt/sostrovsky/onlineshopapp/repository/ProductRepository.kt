@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.data
+package prt.sostrovsky.onlineshopapp.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
-import prt.sostrovsky.onlineshopapp.repository.ProductsFactory
+import prt.sostrovsky.onlineshopapp.data.ProductPagingSource
 import prt.sostrovsky.onlineshopapp.service.ProductService
 import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
 
@@ -23,7 +23,11 @@ class ProductRepository(private val service: ProductService) {
                 pageSize = PAGE_SIZE,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { ProductPagingSource(service) }
+            pagingSourceFactory = {
+                ProductPagingSource(
+                    service
+                )
+            }
         ).flow
     }
 

@@ -1,9 +1,8 @@
 package prt.sostrovsky.onlineshopapp.ui.products
 
-import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import prt.sostrovsky.onlineshopapp.data.ProductRepository
+import prt.sostrovsky.onlineshopapp.repository.ProductRepository
 import prt.sostrovsky.onlineshopapp.service.WebService
 
 /**
@@ -17,7 +16,7 @@ object ProductInjection {
      * Creates an instance of [ProductRepository] based on the [ProductService]
      */
     @ExperimentalCoroutinesApi
-    private fun provideProductRepository(context: Context): ProductRepository {
+    private fun provideProductRepository(): ProductRepository {
         return ProductRepository(WebService.productsService)
     }
 
@@ -25,11 +24,10 @@ object ProductInjection {
      * Provides the [ViewModelProvider.Factory] that is then used to get a reference to
      * [ViewModel] objects.
      */
-    fun provideViewModelFactory(context: Context): ViewModelProvider.Factory {
+    @ExperimentalCoroutinesApi
+    fun provideViewModelFactory(): ViewModelProvider.Factory {
         return ProductsViewModelFactory(
-            provideProductRepository(
-                context
-            )
+            provideProductRepository()
         )
     }
 }

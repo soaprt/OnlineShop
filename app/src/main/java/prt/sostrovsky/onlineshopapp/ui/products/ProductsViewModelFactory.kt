@@ -2,7 +2,7 @@ package prt.sostrovsky.onlineshopapp.ui.products
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import prt.sostrovsky.onlineshopapp.data.ProductRepository
+import prt.sostrovsky.onlineshopapp.repository.ProductRepository
 
 /**
  * Factory for ViewModels

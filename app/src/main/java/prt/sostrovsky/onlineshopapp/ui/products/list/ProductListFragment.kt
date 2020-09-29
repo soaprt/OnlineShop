@@ -47,7 +47,7 @@ class ProductListFragment : Fragment() {
     private fun setViewModel() {
         viewModel = ViewModelProvider(
             this,
-            ProductInjection.provideViewModelFactory(requireContext())
+            ProductInjection.provideViewModelFactory()
         )
             .get(ProductsViewModel::class.java)
     }

@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import prt.sostrovsky.onlineshopapp.data.ProductRepository
+import prt.sostrovsky.onlineshopapp.repository.ProductRepository
 import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
 
 class ProductsViewModel(private val repository: ProductRepository) : ViewModel() {

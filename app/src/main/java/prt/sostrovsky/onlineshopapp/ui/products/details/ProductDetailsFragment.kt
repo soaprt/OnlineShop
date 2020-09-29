@@ -53,10 +53,11 @@ class ProductDetailsFragment : Fragment() {
         setToolbarButtons()
     }
 
+    @ExperimentalCoroutinesApi
     private fun setViewModel() {
         viewModel = ViewModelProvider(
             this,
-            ProductInjection.provideViewModelFactory(requireContext())
+            ProductInjection.provideViewModelFactory()
         )
             .get(ProductsViewModel::class.java)
     }
