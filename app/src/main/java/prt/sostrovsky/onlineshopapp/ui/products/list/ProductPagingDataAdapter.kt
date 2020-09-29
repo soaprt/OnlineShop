@@ -9,8 +9,14 @@ import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
 class ProductPagingDataAdapter :
     PagingDataAdapter<ProductDTO, RecyclerView.ViewHolder>(PRODUCT_COMPARATOR) {
 
+    var itemClick: ((Int) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ProductViewHolder.create(parent)
+        return ProductViewHolder.create(parent).apply {
+            itemClick = { productId ->
+                this@ProductPagingDataAdapter.itemClick?.invoke(productId)
+            }
+        }
     }
 
     override fun onBindViewHolder(

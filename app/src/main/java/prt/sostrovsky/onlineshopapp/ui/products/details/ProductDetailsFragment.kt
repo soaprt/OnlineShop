@@ -10,20 +10,26 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_product_details.*
 import kotlinx.android.synthetic.main.product_short_data.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
 import prt.sostrovsky.onlineshopapp.ui.MainActivity
+import prt.sostrovsky.onlineshopapp.ui.products.ProductInjection
 import prt.sostrovsky.onlineshopapp.ui.products.ProductsViewModel
 
 class ProductDetailsFragment : Fragment() {
     private lateinit var viewModel: ProductsViewModel
     private val passedArgs: ProductDetailsFragmentArgs by navArgs()
+
+    private var getProductJob: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,14 +41,34 @@ class ProductDetailsFragment : Fragment() {
         )
     }
 
+    @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setViewModel()
+        getProduct()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setToolbarButtons()
+    }
+
+    private fun setViewModel() {
+        viewModel = ViewModelProvider(
+            this,
+            ProductInjection.provideViewModelFactory(requireContext())
+        )
+            .get(ProductsViewModel::class.java)
+    }
+
+    @ExperimentalCoroutinesApi
+    private fun getProduct() {
+        getProductJob?.cancel()
+        getProductJob = lifecycleScope.launch {
+            viewModel.getProductBy(passedArgs.productId)?.let {
+                show(it)
+            }
+        }
     }
 
     private fun setToolbarButtons() {
@@ -58,15 +84,6 @@ class ProductDetailsFragment : Fragment() {
                 (activity as MainActivity).moveTo(action)
             }
         })
-    }
-
-    private fun setViewModel() {
-        viewModel = ViewModelProviders.of(this).get(ProductsViewModel::class.java)
-
-//        viewModel.fetchProduct(passedArgs.productId)
-//            .observe(viewLifecycleOwner, Observer { product ->
-//                product?.let { show(it) }
-//            })
     }
 
     private fun show(product: ProductDTO) {
