@@ -26,7 +26,7 @@
         tools:src="@drawable/ic_placeholder" />
 
     <TextView
-        android:id="@+id/lblProductTitle"
+        android:id="@+id/tvProductTitle"
         style="@style/TitleTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,39 +38,39 @@
         tools:text="Apple Iphone X" />
 
     <TextView
-        android:id="@+id/lblProductShortDescription"
+        android:id="@+id/tvProductShortDescription"
         style="@style/DescriptionTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblProductTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvProductTitle"
         tools:text="@string/label_no_data" />
 
     <TextView
-        android:id="@+id/lblProductNewPrice"
+        android:id="@+id/tvProductNewPrice"
         style="@style/NewPriceTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/lblProductOldPrice"
+        app:layout_constraintEnd_toStartOf="@+id/tvProductOldPrice"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblProductShortDescription"
+        app:layout_constraintTop_toBottomOf="@+id/tvProductShortDescription"
         tools:text="@string/label_no_data" />
 
     <TextView
-        android:id="@+id/lblProductOldPrice"
+        android:id="@+id/tvProductOldPrice"
         style="@style/OldPriceTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/indent_8dp"
         android:paddingEnd="@dimen/indent_8dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/lblProductNewPrice"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvProductNewPrice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/lblProductNewPrice" />
+        app:layout_constraintStart_toEndOf="@+id/tvProductNewPrice" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

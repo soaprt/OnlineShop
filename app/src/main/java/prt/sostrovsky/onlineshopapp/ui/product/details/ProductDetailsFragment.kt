@@ -100,10 +100,10 @@ class ProductDetailsFragment : Fragment() {
         Glide.with(ivProductImage.context)
             .load(product.imageUrl)
             .into(ivProductImage)
-        lblProductTitle.text = product.title
-        lblProductShortDescription.text = product.shortDescription
-        lblProductNewPrice.text = product.newPrice
-        UiComponentsUtil.strikeLineThrough(lblProductOldPrice, product.oldPrice)
+        tvProductTitle.text = product.title
+        tvProductShortDescription.text = product.shortDescription
+        tvProductNewPrice.text = product.newPrice
+        UiComponentsUtil.strikeLineThrough(tvProductOldPrice, product.oldPrice)
         lblDescriptionBody.text = product.details
     }
 }

@@ -1,5 +1,6 @@
 package prt.sostrovsky.onlineshopapp.ui.product.list
 
+// import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,19 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import prt.sostrovsky.onlineshopapp.R
+import prt.sostrovsky.onlineshopapp.databinding.FragmentProductListBinding
 import prt.sostrovsky.onlineshopapp.ui.MainActivity
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModel
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModelInjection
 import prt.sostrovsky.onlineshopapp.ui.product.details.ProductDetailsFragment
+import prt.sostrovsky.onlineshopapp.ui.product.list.load_state.ProductLoadStateAdapter
 
 @ExperimentalCoroutinesApi
 class ProductListFragment : Fragment() {
+    private lateinit var binding: FragmentProductListBinding
     private lateinit var viewModel: ProductViewModel
     private val adapter = ProductListAdapter()
 
@@ -30,7 +32,8 @@ class ProductListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_product_list, container, false)
+        binding = FragmentProductListBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,8 +71,13 @@ class ProductListFragment : Fragment() {
 
     private fun setRecyclerView() {
         val linearLayoutManager = LinearLayoutManager(requireContext())
-        recyclerView.layoutManager = linearLayoutManager
-        recyclerView.adapter = adapter.apply {
+        binding.recyclerView.layoutManager = linearLayoutManager
+
+        binding.recyclerView.adapter = adapter.withLoadStateFooter(
+            footer = ProductLoadStateAdapter { adapter.retry() }
+        )
+
+        adapter.apply {
             itemClick = { productId ->
                 showProduct(productId)
             }

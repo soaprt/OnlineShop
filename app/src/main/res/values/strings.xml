@@ -6,8 +6,10 @@
     <string name="buy_now">Buy now</string>
     <string name="information">Information</string>
     <string name="label_no_data">-no data-</string>
+    <string name="load_error">Load data error</string>
     <string name="msg_product_not_found">No product is found.</string>
     <string name="msg_you_are_offline">You are in offline mode.</string>
     <string name="product_image">Product Image</string>
+    <string name="retry">Retry</string>
     <string name="web_service_unavailable_error">"Sorry, Web Service is unavailable. "</string>
 </resources>

@@ -18,10 +18,10 @@ class ProductListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             .load(product.imageUrl)
             .placeholder(R.drawable.ic_placeholder)
             .into(itemView.ivProductImage)
-        itemView.lblProductTitle.text = product.title
-        itemView.lblProductShortDescription.text = product.shortDescription
-        itemView.lblProductNewPrice.text = product.newPrice
-        UiComponentsUtil.strikeLineThrough(itemView.lblProductOldPrice, product.oldPrice)
+        itemView.tvProductTitle.text = product.title
+        itemView.tvProductShortDescription.text = product.shortDescription
+        itemView.tvProductNewPrice.text = product.newPrice
+        UiComponentsUtil.strikeLineThrough(itemView.tvProductOldPrice, product.oldPrice)
 
         itemView.setOnClickListener {
             itemClick?.invoke(product.id)
