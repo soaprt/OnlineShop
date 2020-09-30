@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.ui.products
+package prt.sostrovsky.onlineshopapp.ui.product
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import prt.sostrovsky.onlineshopapp.repository.ProductRepository
 import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
 
-class ProductsViewModel(private val repository: ProductRepository) : ViewModel() {
+class ProductViewModel(private val repository: ProductRepository) : ViewModel() {
     private var productsResult: Flow<PagingData<ProductDTO>>? = null
 
     @ExperimentalCoroutinesApi

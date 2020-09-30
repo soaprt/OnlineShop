@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.ui.products
+package prt.sostrovsky.onlineshopapp.ui.product
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -7,12 +7,12 @@ import prt.sostrovsky.onlineshopapp.repository.ProductRepository
 /**
  * Factory for ViewModels
  */
-class ProductsViewModelFactory(private val repository: ProductRepository) : ViewModelProvider.Factory {
+class ProductViewModelFactory(private val repository: ProductRepository) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ProductsViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(ProductViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return ProductsViewModel(repository) as T
+            return ProductViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

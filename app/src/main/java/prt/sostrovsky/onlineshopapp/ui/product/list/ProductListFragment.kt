@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.ui.products.list
+package prt.sostrovsky.onlineshopapp.ui.product.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import prt.sostrovsky.onlineshopapp.ui.products.ProductInjection
+import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModelInjection
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -16,12 +16,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.ui.MainActivity
-import prt.sostrovsky.onlineshopapp.ui.products.ProductsViewModel
+import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModel
 
 @ExperimentalCoroutinesApi
 class ProductListFragment : Fragment() {
-    private lateinit var viewModel: ProductsViewModel
-    private val adapter = ProductPagingDataAdapter()
+    private lateinit var viewModel: ProductViewModel
+    private val adapter = ProductListAdapter()
 
     private var getProductsJob: Job? = null
 
@@ -47,9 +47,9 @@ class ProductListFragment : Fragment() {
     private fun setViewModel() {
         viewModel = ViewModelProvider(
             this,
-            ProductInjection.provideViewModelFactory()
+            ProductViewModelInjection.provideViewModelFactory()
         )
-            .get(ProductsViewModel::class.java)
+            .get(ProductViewModel::class.java)
     }
 
     private fun getProducts() {

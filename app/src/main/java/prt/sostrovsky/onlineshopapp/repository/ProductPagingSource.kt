@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.data
+package prt.sostrovsky.onlineshopapp.repository
 
 import androidx.paging.PagingSource
 import prt.sostrovsky.onlineshopapp.service.ProductService

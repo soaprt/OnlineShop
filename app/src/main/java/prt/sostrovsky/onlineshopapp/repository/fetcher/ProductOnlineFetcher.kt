@@ -4,7 +4,7 @@ import prt.sostrovsky.onlineshopapp.service.WebService
 import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
 import prt.sostrovsky.onlineshopapp.service.response.safeApiCall
 
-object ProductsOnlineFetcher : ProductsFetcher {
+object ProductOnlineFetcher : ProductFetcher {
     override suspend fun fetchProductBy(id: Int): ProductDTO? {
         return fetchProductFromWebService(id)
     }

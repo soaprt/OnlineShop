@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.ui.products
+package prt.sostrovsky.onlineshopapp.ui.product
 
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -10,7 +10,7 @@ import prt.sostrovsky.onlineshopapp.service.WebService
  * Like this, objects can be passed as parameters in the constructors and then replaced for
  * testing, where needed.
  */
-object ProductInjection {
+object ProductViewModelInjection {
 
     /**
      * Creates an instance of [ProductRepository] based on the [ProductService]
@@ -26,7 +26,7 @@ object ProductInjection {
      */
     @ExperimentalCoroutinesApi
     fun provideViewModelFactory(): ViewModelProvider.Factory {
-        return ProductsViewModelFactory(
+        return ProductViewModelFactory(
             provideProductRepository()
         )
     }

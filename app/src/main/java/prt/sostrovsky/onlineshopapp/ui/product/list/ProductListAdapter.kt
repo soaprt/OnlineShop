@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.ui.products.list
+package prt.sostrovsky.onlineshopapp.ui.product.list
 
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -6,15 +6,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
 
-class ProductPagingDataAdapter :
+class ProductListAdapter :
     PagingDataAdapter<ProductDTO, RecyclerView.ViewHolder>(PRODUCT_COMPARATOR) {
 
     var itemClick: ((Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ProductViewHolder.create(parent).apply {
+        return ProductListViewHolder.create(parent).apply {
             itemClick = { productId ->
-                this@ProductPagingDataAdapter.itemClick?.invoke(productId)
+                this@ProductListAdapter.itemClick?.invoke(productId)
             }
         }
     }
@@ -25,7 +25,7 @@ class ProductPagingDataAdapter :
     ) {
         val repoItem = getItem(position)
         if (repoItem != null) {
-            (holder as ProductViewHolder).bindView(repoItem)
+            (holder as ProductListViewHolder).bindView(repoItem)
         }
     }
 

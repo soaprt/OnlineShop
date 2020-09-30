@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.ui.products.details
+package prt.sostrovsky.onlineshopapp.ui.product.details
 
 import android.os.Bundle
 import android.text.Spannable
@@ -22,11 +22,11 @@ import kotlinx.coroutines.launch
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
 import prt.sostrovsky.onlineshopapp.ui.MainActivity
-import prt.sostrovsky.onlineshopapp.ui.products.ProductInjection
-import prt.sostrovsky.onlineshopapp.ui.products.ProductsViewModel
+import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModelInjection
+import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModel
 
 class ProductDetailsFragment : Fragment() {
-    private lateinit var viewModel: ProductsViewModel
+    private lateinit var viewModel: ProductViewModel
     private val passedArgs: ProductDetailsFragmentArgs by navArgs()
 
     private var getProductJob: Job? = null
@@ -57,9 +57,9 @@ class ProductDetailsFragment : Fragment() {
     private fun setViewModel() {
         viewModel = ViewModelProvider(
             this,
-            ProductInjection.provideViewModelFactory()
+            ProductViewModelInjection.provideViewModelFactory()
         )
-            .get(ProductsViewModel::class.java)
+            .get(ProductViewModel::class.java)
     }
 
     @ExperimentalCoroutinesApi

@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.ui.products.list
+package prt.sostrovsky.onlineshopapp.ui.product.list
 
 import android.text.Spannable
 import android.text.Spanned
@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.product_short_data.view.*
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
 
-class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class ProductListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var itemClick: ((Int) -> Unit)? = null
 
     fun bindView(product: ProductDTO) {
@@ -41,10 +41,10 @@ class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     companion object {
-        fun create(parent: ViewGroup): ProductViewHolder {
+        fun create(parent: ViewGroup): ProductListViewHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.product_short_data, parent, false)
-            return ProductViewHolder(view)
+            return ProductListViewHolder(view)
         }
     }
 }
