@@ -4,8 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.map
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import prt.sostrovsky.onlineshopapp.database.entity.asDomainModel
 import prt.sostrovsky.onlineshopapp.domain.Product
 import prt.sostrovsky.onlineshopapp.repository.ProductRepository
 
@@ -15,7 +18,10 @@ class ProductViewModel @ExperimentalCoroutinesApi constructor(private val reposi
 
     @ExperimentalCoroutinesApi
     fun getProducts(): Flow<PagingData<Product>> {
-        productsResult = repository.getProducts().cachedIn(viewModelScope)
+        productsResult = repository.getProducts().map { pagingData ->
+            pagingData.map { it.asDomainModel() }
+        }.cachedIn(viewModelScope)
+
         return productsResult as Flow<PagingData<Product>>
     }
 

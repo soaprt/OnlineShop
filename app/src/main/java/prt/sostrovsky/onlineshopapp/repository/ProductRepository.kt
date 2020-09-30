@@ -4,29 +4,28 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import prt.sostrovsky.onlineshopapp.database.OnlineShopDatabase
+import prt.sostrovsky.onlineshopapp.database.entity.ProductEntity
 import prt.sostrovsky.onlineshopapp.domain.Product
+import prt.sostrovsky.onlineshopapp.service.ProductRemoteMediator
 import prt.sostrovsky.onlineshopapp.service.ProductService
 
-/**
- * Repository class that works with local and remote data sources.
- */
-@ExperimentalCoroutinesApi
-class ProductRepository(private val service: ProductService) {
-    fun getProducts(): Flow<PagingData<Product>> {
+
+class ProductRepository(
+    private val service: ProductService,
+    private val database: OnlineShopDatabase
+) {
+    fun getProducts(): Flow<PagingData<ProductEntity>> {
         return Pager(
             config = PagingConfig(
                 initialLoadSize = INITIAL_LOAD_SIZE,
                 pageSize = PAGE_SIZE,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = {
-                ProductPagingSource(
-                    service
-                )
-            }
+            remoteMediator = ProductRemoteMediator(service, database),
+            pagingSourceFactory = { ProductPagingSource(database) }
         ).flow
     }
 
