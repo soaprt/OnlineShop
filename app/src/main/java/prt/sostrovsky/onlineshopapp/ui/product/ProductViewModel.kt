@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.Flow
 import prt.sostrovsky.onlineshopapp.repository.ProductRepository
 import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
 
-class ProductViewModel(private val repository: ProductRepository) : ViewModel() {
+class ProductViewModel @ExperimentalCoroutinesApi constructor(private val repository: ProductRepository) :
+    ViewModel() {
     private var productsResult: Flow<PagingData<ProductDTO>>? = null
 
     @ExperimentalCoroutinesApi
@@ -19,7 +20,6 @@ class ProductViewModel(private val repository: ProductRepository) : ViewModel() 
     }
 
     private var product: ProductDTO? = null
-    var selectedProductIsLoaded = false
 
     @ExperimentalCoroutinesApi
     suspend fun getProductBy(id: Int): ProductDTO? {

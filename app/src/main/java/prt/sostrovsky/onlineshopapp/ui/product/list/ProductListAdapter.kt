@@ -23,9 +23,9 @@ class ProductListAdapter :
         holder: RecyclerView.ViewHolder,
         position: Int
     ) {
-        val repoItem = getItem(position)
-        if (repoItem != null) {
-            (holder as ProductListViewHolder).bindView(repoItem)
+        val product = getItem(position)
+        if (product != null) {
+            (holder as ProductListViewHolder).bindView(product)
         }
     }
 

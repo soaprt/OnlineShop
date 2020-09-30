@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModelInjection
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -17,6 +16,8 @@ import kotlinx.coroutines.launch
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.ui.MainActivity
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModel
+import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModelInjection
+import prt.sostrovsky.onlineshopapp.ui.product.details.ProductDetailsFragment
 
 @ExperimentalCoroutinesApi
 class ProductListFragment : Fragment() {
@@ -70,17 +71,17 @@ class ProductListFragment : Fragment() {
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter.apply {
             itemClick = { productId ->
-                viewModel.selectedProductIsLoaded = false
                 showProduct(productId)
             }
         }
     }
 
     private fun showProduct(productId: Int) {
-        val action =
-            ProductListFragmentDirections.actionProductListFragmentToProductDetailsFragment(
-                productId
-            )
-        (activity as MainActivity).moveTo(action)
+        val detailsFragment = ProductDetailsFragment().apply {
+            this.arguments = Bundle().apply {
+                putInt("product_id", productId)
+            }
+        }
+        (activity as MainActivity).addFragmentToBackStack(detailsFragment)
     }
 }

@@ -16,13 +16,14 @@
         android:layout_width="@dimen/product_image_size"
         android:layout_height="@dimen/product_image_size"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/product_image"
         android:maxWidth="@dimen/product_image_size"
         android:maxHeight="@dimen/product_image_size"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_placeholder" />
 
     <TextView
         android:id="@+id/lblProductTitle"
@@ -31,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/indent_16dp"
         android:gravity="center_horizontal"
-        android:text="@string/label_no_data"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivProductImage"
@@ -43,7 +43,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="@string/label_no_data"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblProductTitle"
