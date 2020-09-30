@@ -8,12 +8,12 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.product_short_data.view.*
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.UiComponentsUtil
-import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
+import prt.sostrovsky.onlineshopapp.domain.Product
 
 class ProductListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var itemClick: ((Int) -> Unit)? = null
 
-    fun bindView(product: ProductDTO) {
+    fun bindView(product: Product) {
         Glide.with(itemView.ivProductImage.context)
             .load(product.imageUrl)
             .placeholder(R.drawable.ic_placeholder)

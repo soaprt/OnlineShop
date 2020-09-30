@@ -4,10 +4,10 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
+import prt.sostrovsky.onlineshopapp.domain.Product
 
 class ProductListAdapter :
-    PagingDataAdapter<ProductDTO, RecyclerView.ViewHolder>(PRODUCT_COMPARATOR) {
+    PagingDataAdapter<Product, RecyclerView.ViewHolder>(PRODUCT_COMPARATOR) {
 
     var itemClick: ((Int) -> Unit)? = null
 
@@ -30,11 +30,11 @@ class ProductListAdapter :
     }
 
     companion object {
-        private val PRODUCT_COMPARATOR = object : DiffUtil.ItemCallback<ProductDTO>() {
-            override fun areItemsTheSame(oldItem: ProductDTO, newItem: ProductDTO): Boolean =
+        private val PRODUCT_COMPARATOR = object : DiffUtil.ItemCallback<Product>() {
+            override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean =
                 oldItem.id == newItem.id
 
-            override fun areContentsTheSame(oldItem: ProductDTO, newItem: ProductDTO): Boolean =
+            override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean =
                 oldItem == newItem
         }
     }

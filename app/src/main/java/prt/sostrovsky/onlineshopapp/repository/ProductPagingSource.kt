@@ -1,15 +1,16 @@
 package prt.sostrovsky.onlineshopapp.repository
 
 import androidx.paging.PagingSource
+import prt.sostrovsky.onlineshopapp.domain.Product
 import prt.sostrovsky.onlineshopapp.service.ProductService
-import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
+import prt.sostrovsky.onlineshopapp.service.response.asDomainModel
 
-class ProductPagingSource(private val service: ProductService) : PagingSource<Int, ProductDTO>() {
+class ProductPagingSource(private val service: ProductService) : PagingSource<Int, Product>() {
 
     // the initial load size for the first page may be different from the requested size
     private var initialLoadSize: Int = 0
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ProductDTO> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
         try {
             // Start refresh at page 1 if undefined.
             val nextPageNumber = params.key ?: 1
@@ -29,7 +30,9 @@ class ProductPagingSource(private val service: ProductService) : PagingSource<In
             val offset = offsetCalc.invoke()
 
             val response = service.fetchProductsAsync(offset, params.loadSize).await()
-            val products = response.body()!!
+            val products = response.body()!!.map {
+                it.asDomainModel()
+            }
             val count = products.size
 
             return LoadResult.Page(

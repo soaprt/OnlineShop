@@ -7,15 +7,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import prt.sostrovsky.onlineshopapp.domain.Product
 import prt.sostrovsky.onlineshopapp.service.ProductService
-import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
 
 /**
  * Repository class that works with local and remote data sources.
  */
 @ExperimentalCoroutinesApi
 class ProductRepository(private val service: ProductService) {
-    fun getProducts(): Flow<PagingData<ProductDTO>> {
+    fun getProducts(): Flow<PagingData<Product>> {
         return Pager(
             config = PagingConfig(
                 initialLoadSize = INITIAL_LOAD_SIZE,
@@ -30,8 +30,8 @@ class ProductRepository(private val service: ProductService) {
         ).flow
     }
 
-    suspend fun getProductBy(id: Int): ProductDTO? {
-        var product: ProductDTO? = null
+    suspend fun getProductBy(id: Int): Product? {
+        var product: Product? = null
 
         withContext(Dispatchers.IO) {
             product = ProductFactory.getFactory().fetchProductBy(id)

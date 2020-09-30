@@ -17,7 +17,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.UiComponentsUtil
-import prt.sostrovsky.onlineshopapp.service.response.ProductDTO
+import prt.sostrovsky.onlineshopapp.domain.Product
 import prt.sostrovsky.onlineshopapp.ui.MainActivity
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModel
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModelInjection
@@ -96,7 +96,7 @@ class ProductDetailsFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this, backButtonCallback)
     }
 
-    private fun show(product: ProductDTO) {
+    private fun show(product: Product) {
         Glide.with(ivProductImage.context)
             .load(product.imageUrl)
             .into(ivProductImage)
