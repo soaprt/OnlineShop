@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.network.response
+package prt.sostrovsky.onlineshopapp.remote.response
 
 import retrofit2.Response
 import timber.log.Timber
@@ -11,20 +11,20 @@ suspend fun <T : Any> safeApiCall(call: suspend () -> Response<T>, error: String
     )
     var output: T? = null
     when (result) {
-        is WebResponse.Success -> output = result.output
-        is WebResponse.Error -> Timber.e("${result.exception}")
+        is RemoteResponse.Success -> output = result.output
+        is RemoteResponse.Error -> Timber.e("${result.exception}")
     }
     return output
 
 }
 
 private suspend fun <T : Any> webResponseOutput(call: suspend () -> Response<T>, error: String):
-        WebResponse<T> {
+        RemoteResponse<T> {
     val response = call.invoke()
     return if (response.isSuccessful)
-        WebResponse.Success(response.body()!!)
+        RemoteResponse.Success(response.body()!!)
     else
-        WebResponse.Error(
+        RemoteResponse.Error(
             IOException(
                 error
             )

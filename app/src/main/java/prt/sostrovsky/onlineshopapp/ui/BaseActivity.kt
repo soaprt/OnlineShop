@@ -5,8 +5,8 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.NavDirections
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.Disposable
 import prt.sostrovsky.onlineshopapp.R
@@ -73,20 +73,13 @@ open class BaseActivity(private val rootLayoutId: Int) : AppCompatActivity() {
         snackBarOffline?.dismiss()
     }
 
-    fun showSnackBarEvent(message: String) {
-        generateSnackBar(findViewById(rootLayoutId), message, Snackbar.LENGTH_SHORT).show()
-    }
-
-    fun moveTo(action: NavDirections) {
-        navController.navigate(action)
-    }
-
     fun backButtonEnable(callback: OnBackPressedCallback) {
         toolbarBackButton.apply {
             visibility = View.VISIBLE
             isClickable = true
             setOnClickListener {
                 callback.handleOnBackPressed()
+                backButtonDisable()
             }
         }
     }
@@ -97,5 +90,12 @@ open class BaseActivity(private val rootLayoutId: Int) : AppCompatActivity() {
             isClickable = false
             setOnClickListener(null)
         }
+    }
+
+    fun addFragmentToBackStack(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .add(R.id.myNavHostFragment, fragment)
+            .addToBackStack(fragment.javaClass.simpleName)
+            .commit()
     }
 }

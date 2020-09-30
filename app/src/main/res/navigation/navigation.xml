@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/productListFragment"
-        android:name="prt.sostrovsky.onlineshopapp.ui.products.list.ProductListFragment"
+        android:name="prt.sostrovsky.onlineshopapp.ui.product.list.ProductListFragment"
         tools:layout="@layout/fragment_product_list" >
         <action
             android:id="@+id/action_productListFragment_to_productDetailsFragment"
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
-        android:name="prt.sostrovsky.onlineshopapp.ui.products.details.ProductDetailsFragment">
+        android:name="prt.sostrovsky.onlineshopapp.ui.product.details.ProductDetailsFragment">
         <argument
             android:name="product_id"
             app:argType="integer" />
@@ -23,6 +23,6 @@
             android:id="@+id/action_productDetailsFragment_to_productListFragment"
             app:destination="@id/productListFragment"
             app:popUpTo="@id/productListFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
 </navigation>
