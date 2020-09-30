@@ -5,10 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import prt.sostrovsky.onlineshopapp.database.dao.ProductDao
-import prt.sostrovsky.onlineshopapp.database.entity.ProductEntity
 
 @Database(
-    entities = [ProductEntity::class],
+    entities = [ProductDTO::class],
     version = 1,
     exportSchema = false
 )

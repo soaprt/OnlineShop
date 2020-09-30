@@ -3,7 +3,7 @@ package prt.sostrovsky.onlineshopapp.ui.product
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import prt.sostrovsky.onlineshopapp.repository.ProductRepository
+import prt.sostrovsky.onlineshopapp.datasource.ProductRepository
 
 /**
  * Factory for ViewModels

@@ -3,8 +3,8 @@ package prt.sostrovsky.onlineshopapp.ui.product
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import prt.sostrovsky.onlineshopapp.database.OnlineShopDatabase
-import prt.sostrovsky.onlineshopapp.repository.ProductRepository
-import prt.sostrovsky.onlineshopapp.service.WebService
+import prt.sostrovsky.onlineshopapp.datasource.ProductRepository
+import prt.sostrovsky.onlineshopapp.remote.Remote
 
 /**
  * Class that handles object creation.
@@ -14,7 +14,7 @@ import prt.sostrovsky.onlineshopapp.service.WebService
 object ProductViewModelInjection {
     private fun provideProductRepository(context: Context): ProductRepository {
         return ProductRepository(
-            WebService.productsService,
+            Remote.productApi,
             OnlineShopDatabase.getInstance(context)
         )
     }

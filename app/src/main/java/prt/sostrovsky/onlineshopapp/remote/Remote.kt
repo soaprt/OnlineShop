@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.service
+package prt.sostrovsky.onlineshopapp.remote
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-object WebService {
+object Remote {
     private const val BASE_URL = "http://mobile-test.devebs.net:5000/"
 
     private const val READ_TIMEOUT: Long = 20
@@ -27,6 +27,5 @@ object WebService {
         .client(client)
         .build()
 
-    val productsService: ProductService = retrofit.create(
-        ProductService::class.java)
+    val productApi: ProductApi = retrofit.create(ProductApi::class.java)
 }

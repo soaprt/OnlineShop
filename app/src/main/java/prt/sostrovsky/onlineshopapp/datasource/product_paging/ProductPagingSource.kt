@@ -1,18 +1,18 @@
-package prt.sostrovsky.onlineshopapp.repository
+package prt.sostrovsky.onlineshopapp.datasource.product_paging
 
 import androidx.paging.PagingSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import prt.sostrovsky.onlineshopapp.database.OnlineShopDatabase
-import prt.sostrovsky.onlineshopapp.database.entity.ProductEntity
+import prt.sostrovsky.onlineshopapp.database.ProductDTO
 
 
 class ProductPagingSource(private val database: OnlineShopDatabase) :
-    PagingSource<Int, ProductEntity>() {
+    PagingSource<Int, ProductDTO>() {
     // the initial load size for the first page may be different from the requested size
     private var initialLoadSize: Int = 0
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ProductEntity> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ProductDTO> {
         try {
             val nextPageNumber = params.key ?: 1
 
@@ -30,7 +30,7 @@ class ProductPagingSource(private val database: OnlineShopDatabase) :
             }
             val offset = offsetCalc.invoke()
 
-            val products = mutableListOf<ProductEntity>()
+            val products = mutableListOf<ProductDTO>()
 
             withContext(Dispatchers.IO) {
                 products.addAll(database.productDao().getProducts(offset, params.loadSize))

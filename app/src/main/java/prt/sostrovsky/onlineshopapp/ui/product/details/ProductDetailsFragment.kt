@@ -99,6 +99,7 @@ class ProductDetailsFragment : Fragment() {
     private fun show(product: Product) {
         Glide.with(ivProductImage.context)
             .load(product.imageUrl)
+            .placeholder(R.drawable.ic_placeholder)
             .into(ivProductImage)
         tvProductTitle.text = product.title
         tvProductShortDescription.text = product.shortDescription

@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.database.entity
+package prt.sostrovsky.onlineshopapp.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 import prt.sostrovsky.onlineshopapp.domain.Product
 
 @Entity(tableName = "product")
-data class ProductEntity(
+data class ProductDTO(
     @PrimaryKey @field:SerializedName("id") val id: Int,
     @field:SerializedName("title") val title: String,
     @field:SerializedName("short_description") val short_description: String,
@@ -16,7 +16,7 @@ data class ProductEntity(
     @field:SerializedName("details") val details: String
 )
 
-fun ProductEntity.asDomainModel(): Product {
+fun ProductDTO.asDomainModel(): Product {
     return Product(
         id = id,
         title = title,

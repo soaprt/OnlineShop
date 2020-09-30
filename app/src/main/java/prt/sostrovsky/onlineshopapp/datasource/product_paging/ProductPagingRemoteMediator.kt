@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.service
+package prt.sostrovsky.onlineshopapp.datasource.product_paging
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -7,18 +7,19 @@ import androidx.paging.RemoteMediator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import prt.sostrovsky.onlineshopapp.database.OnlineShopDatabase
-import prt.sostrovsky.onlineshopapp.database.entity.ProductEntity
+import prt.sostrovsky.onlineshopapp.database.ProductDTO
+import prt.sostrovsky.onlineshopapp.remote.ProductApi
 import retrofit2.HttpException
 import java.io.IOException
 
 @OptIn(ExperimentalPagingApi::class)
-class ProductRemoteMediator(
-    private val service: ProductService,
+class ProductPagingRemoteMediator(
+    private val api: ProductApi,
     private val database: OnlineShopDatabase
-) : RemoteMediator<Int, ProductEntity>() {
+) : RemoteMediator<Int, ProductDTO>() {
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, ProductEntity>
+        state: PagingState<Int, ProductDTO>
     ): MediatorResult {
         val offset = when (loadType) {
             LoadType.REFRESH -> {
@@ -33,11 +34,11 @@ class ProductRemoteMediator(
         }
 
         try {
-            val products = mutableListOf<ProductEntity>()
+            val products = mutableListOf<ProductDTO>()
 
             withContext(Dispatchers.IO) {
                 if (loadType == LoadType.REFRESH || loadType == LoadType.APPEND) {
-                    val response = service.fetchProductsAsync(offset, state.config.pageSize).await()
+                    val response = api.getProductsAsync(offset, state.config.pageSize).await()
 
                     if (response.isSuccessful) {
                         products.addAll(response.body()!!)

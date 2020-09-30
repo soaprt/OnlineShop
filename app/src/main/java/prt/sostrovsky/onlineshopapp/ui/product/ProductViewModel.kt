@@ -8,9 +8,9 @@ import androidx.paging.map
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import prt.sostrovsky.onlineshopapp.database.entity.asDomainModel
+import prt.sostrovsky.onlineshopapp.database.asDomainModel
 import prt.sostrovsky.onlineshopapp.domain.Product
-import prt.sostrovsky.onlineshopapp.repository.ProductRepository
+import prt.sostrovsky.onlineshopapp.datasource.ProductRepository
 
 class ProductViewModel @ExperimentalCoroutinesApi constructor(private val repository: ProductRepository) :
     ViewModel() {
