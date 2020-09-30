@@ -1,14 +1,14 @@
 package prt.sostrovsky.onlineshopapp.ui.product.list
 
-// import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.paging.LoadState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -40,6 +40,7 @@ class ProductListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setViewModel()
         setRecyclerView()
+        setRetryButton()
         getProducts()
     }
 
@@ -56,6 +57,32 @@ class ProductListFragment : Fragment() {
             .get(ProductViewModel::class.java)
     }
 
+    private fun setRecyclerView() {
+        binding.rvProducts.adapter = adapter.withLoadStateFooter(
+            footer = ProductLoadStateAdapter { adapter.retry() }
+        )
+
+        adapter.apply {
+            itemClick = { productId ->
+                showProduct(productId)
+            }
+        }
+
+        adapter.addLoadStateListener { loadState ->
+            // Only show the list if refresh succeeds.
+            binding.rvProducts.isVisible = loadState.source.refresh is LoadState.NotLoading
+            // Show loading spinner during initial load or refresh.
+            binding.pgLoad.isVisible = loadState.source.refresh is LoadState.Loading
+            // Show the retry state if initial load or refresh fails.
+            binding.clLoadDataError.tvErrorText.isVisible = loadState.source.refresh is LoadState.Error
+            binding.clLoadDataError.btnRetry.isVisible = loadState.source.refresh is LoadState.Error
+        }
+    }
+
+    private fun setRetryButton() {
+        binding.clLoadDataError.btnRetry.setOnClickListener { adapter.retry() }
+    }
+
     private fun getProducts() {
         getProductsJob?.cancel()
         getProductsJob = lifecycleScope.launch {
@@ -67,21 +94,6 @@ class ProductListFragment : Fragment() {
 
     private fun setToolbarButtons() {
         (activity as MainActivity).backButtonDisable()
-    }
-
-    private fun setRecyclerView() {
-        val linearLayoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.layoutManager = linearLayoutManager
-
-        binding.recyclerView.adapter = adapter.withLoadStateFooter(
-            footer = ProductLoadStateAdapter { adapter.retry() }
-        )
-
-        adapter.apply {
-            itemClick = { productId ->
-                showProduct(productId)
-            }
-        }
     }
 
     private fun showProduct(productId: Int) {
