@@ -20,7 +20,6 @@ import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModel
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModelInjection
 import prt.sostrovsky.onlineshopapp.ui.product.details.ProductDetailsFragment
 import prt.sostrovsky.onlineshopapp.ui.product.list.load_state.ProductLoadStateAdapter
-import timber.log.Timber
 
 @ExperimentalCoroutinesApi
 class ProductListFragment : Fragment() {
@@ -41,6 +40,7 @@ class ProductListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setViewModel()
+        setBackStackChangeListener()
         setRecyclerView()
         setRetryButton()
         getProducts()
@@ -76,7 +76,8 @@ class ProductListFragment : Fragment() {
             // Show loading spinner during initial load or refresh.
             binding.pgLoad.isVisible = loadState.source.refresh is LoadState.Loading
             // Show the retry state if initial load or refresh fails.
-            binding.clLoadDataError.tvErrorText.isVisible = loadState.source.refresh is LoadState.Error
+            binding.clLoadDataError.tvErrorText.isVisible =
+                loadState.source.refresh is LoadState.Error
             binding.clLoadDataError.btnRetry.isVisible = loadState.source.refresh is LoadState.Error
         }
     }
@@ -95,11 +96,24 @@ class ProductListFragment : Fragment() {
     }
 
     private fun setToolbarButtons() {
-        (activity as MainActivity).apply {
-            backButtonDisable()
-            favoritesButtonEnable(callback = View.OnClickListener {
-                showFavorites()
-            })
+        (activity as MainActivity).backButtonDisable()
+        enableFavoritesButton()
+    }
+
+
+    private fun enableFavoritesButton() {
+        (activity as MainActivity).favoritesButtonEnable(callback = View.OnClickListener {
+            showFavorites()
+        })
+    }
+
+    private fun setBackStackChangeListener() {
+        requireActivity().supportFragmentManager.apply {
+            addOnBackStackChangedListener {
+                if (backStackEntryCount == 0) {
+                    enableFavoritesButton()
+                }
+            }
         }
     }
 

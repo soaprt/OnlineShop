@@ -8,7 +8,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.Disposable
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.network.connection.NetworkConnection
