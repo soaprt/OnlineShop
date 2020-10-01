@@ -75,8 +75,7 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/favorites"
                 android:layout_gravity="center_horizontal|end"
-                android:tint="@android:color/white"
-                android:src="@drawable/ic_favorites" />
+                android:src="@drawable/favorites_toolbar" />
 
         </FrameLayout>
 

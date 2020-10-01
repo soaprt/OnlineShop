@@ -25,6 +25,15 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_placeholder" />
 
+    <CheckBox
+        android:id="@+id/cbFavorite"
+        android:layout_width="@dimen/favorites_button_width"
+        android:layout_height="@dimen/favorites_button_height"
+        android:background="@drawable/favorites_selector"
+        android:button="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tvProductTitle"
         style="@style/TitleTextStyle"
