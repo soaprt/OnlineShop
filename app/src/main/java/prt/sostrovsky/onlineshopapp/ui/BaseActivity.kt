@@ -16,6 +16,7 @@ import prt.sostrovsky.onlineshopapp.network.connection.NetworkConnection
 open class BaseActivity : AppCompatActivity() {
     lateinit var navController: NavController
     lateinit var toolbarBackButton: FrameLayout
+    lateinit var toolbarFavoritesButton: FrameLayout
     lateinit var offlineBar : TextView
 
     private var networkDisposable: Disposable? = null
@@ -57,14 +58,6 @@ open class BaseActivity : AppCompatActivity() {
         offlineBar.visibility = View.GONE
     }
 
-    private fun generateSnackBar(view: View, message: String, duration: Int): Snackbar {
-        val result = Snackbar.make(view, message, duration)
-        val snackBarView: View = result.view
-        snackBarView.setBackgroundColor(applicationContext.resources.getColor(R.color.colorPrimary))
-
-        return result
-    }
-
     fun backButtonEnable(callback: OnBackPressedCallback) {
         toolbarBackButton.apply {
             visibility = View.VISIBLE
@@ -78,6 +71,22 @@ open class BaseActivity : AppCompatActivity() {
 
     fun backButtonDisable() {
         toolbarBackButton.apply {
+            visibility = View.INVISIBLE
+            isClickable = false
+            setOnClickListener(null)
+        }
+    }
+
+    fun favoritesButtonEnable(callback: View.OnClickListener? = null) {
+        toolbarFavoritesButton.apply {
+            visibility = View.VISIBLE
+            isClickable = true
+            setOnClickListener(callback)
+        }
+    }
+
+    fun favoritesButtonDisable() {
+        toolbarFavoritesButton.apply {
             visibility = View.INVISIBLE
             isClickable = false
             setOnClickListener(null)

@@ -21,7 +21,7 @@
         android:padding="@dimen/indent_8dp">
 
         <FrameLayout
-            android:id="@+id/flToolbarLeftButton"
+            android:id="@+id/flToolbarBackButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/toolbar_button_size"
             android:layout_gravity="center_horizontal|start"
@@ -53,6 +53,32 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/flToolbarFavoritesButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/toolbar_button_size"
+            android:layout_gravity="center_horizontal|end"
+            android:paddingStart="@dimen/indent_8dp"
+            android:paddingEnd="@dimen/indent_2dp"
+            android:paddingVertical="@dimen/indent_8dp"
+            android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivAppLogo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/ivFavorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/favorites"
+                android:layout_gravity="center_horizontal|end"
+                android:tint="@android:color/white"
+                android:src="@drawable/ic_favorites" />
+
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

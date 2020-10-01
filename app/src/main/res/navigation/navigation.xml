@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_productListFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_productListFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
@@ -21,6 +24,15 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_productDetailsFragment_to_productListFragment"
+            app:destination="@id/productListFragment"
+            app:popUpTo="@id/productListFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="prt.sostrovsky.onlineshopapp.ui.favorites.FavoritesFragment">
+        <action
+            android:id="@+id/action_favoritesFragment_to_productListFragment"
             app:destination="@id/productListFragment"
             app:popUpTo="@id/productListFragment"
             app:popUpToInclusive="false" />

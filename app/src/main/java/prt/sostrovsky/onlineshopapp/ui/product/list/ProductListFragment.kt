@@ -15,17 +15,19 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import prt.sostrovsky.onlineshopapp.databinding.FragmentProductListBinding
 import prt.sostrovsky.onlineshopapp.ui.MainActivity
+import prt.sostrovsky.onlineshopapp.ui.favorites.FavoritesFragment
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModel
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModelInjection
 import prt.sostrovsky.onlineshopapp.ui.product.details.ProductDetailsFragment
 import prt.sostrovsky.onlineshopapp.ui.product.list.load_state.ProductLoadStateAdapter
+import timber.log.Timber
 
 @ExperimentalCoroutinesApi
 class ProductListFragment : Fragment() {
     private lateinit var binding: FragmentProductListBinding
     private lateinit var viewModel: ProductViewModel
-    private val adapter = ProductListAdapter()
 
+    private val adapter = ProductListAdapter()
     private var getProductsJob: Job? = null
 
     override fun onCreateView(
@@ -93,7 +95,12 @@ class ProductListFragment : Fragment() {
     }
 
     private fun setToolbarButtons() {
-        (activity as MainActivity).backButtonDisable()
+        (activity as MainActivity).apply {
+            backButtonDisable()
+            favoritesButtonEnable(callback = View.OnClickListener {
+                showFavorites()
+            })
+        }
     }
 
     private fun showProduct(productId: Int) {
@@ -103,5 +110,10 @@ class ProductListFragment : Fragment() {
             }
         }
         (activity as MainActivity).addFragmentToBackStack(detailsFragment)
+    }
+
+    private fun showFavorites() {
+        val favoritesFragment = FavoritesFragment()
+        (activity as MainActivity).addFragmentToBackStack(favoritesFragment)
     }
 }

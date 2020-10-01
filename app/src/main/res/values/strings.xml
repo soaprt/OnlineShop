@@ -4,6 +4,7 @@
     <string name="app_name">OnlineShopApp</string>
     <string name="arrow_back">Arrow back</string>
     <string name="buy_now">Buy now</string>
+    <string name="favorites">Favorites</string>
     <string name="information">Information</string>
     <string name="label_no_data">-no data-</string>
     <string name="load_error">Load data error</string>

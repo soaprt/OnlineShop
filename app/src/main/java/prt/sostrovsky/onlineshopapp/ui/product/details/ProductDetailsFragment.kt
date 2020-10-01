@@ -1,11 +1,7 @@
 package prt.sostrovsky.onlineshopapp.ui.product.details
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -18,43 +14,20 @@ import kotlinx.coroutines.launch
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.UiComponentsUtil
 import prt.sostrovsky.onlineshopapp.domain.Product
-import prt.sostrovsky.onlineshopapp.ui.MainActivity
+import prt.sostrovsky.onlineshopapp.ui.SecondaryFragment
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModel
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModelInjection
 
-class ProductDetailsFragment : Fragment() {
+class ProductDetailsFragment : SecondaryFragment(R.layout.fragment_product_details) {
     private lateinit var viewModel: ProductViewModel
-    private lateinit var backButtonCallback: OnBackPressedCallback
-
     private val passedArgs: ProductDetailsFragmentArgs by navArgs()
-
     private var getProductJob: Job? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setBackButtonCallback()
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(
-            R.layout.fragment_product_details, container,
-            false
-        )
-    }
 
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setViewModel()
         getProduct()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        setToolbarButtons()
     }
 
     @ExperimentalCoroutinesApi
@@ -74,26 +47,6 @@ class ProductDetailsFragment : Fragment() {
                 show(it)
             }
         }
-    }
-
-    private fun setToolbarButtons() {
-        setBackButton()
-    }
-
-    private fun setBackButton() {
-        (activity as MainActivity).backButtonEnable(callback = backButtonCallback)
-    }
-
-    private fun setBackButtonCallback() {
-        backButtonCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (isEnabled) {
-                    isEnabled = false
-                    requireActivity().onBackPressed()
-                }
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, backButtonCallback)
     }
 
     private fun show(product: Product) {
