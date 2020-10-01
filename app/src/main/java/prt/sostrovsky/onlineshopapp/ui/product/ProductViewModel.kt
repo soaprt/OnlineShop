@@ -34,4 +34,8 @@ class ProductViewModel @ExperimentalCoroutinesApi constructor(private val reposi
         }
         return product
     }
+
+    suspend fun invertFavoriteState(productId: Int) {
+        repository.invertFavoriteState(productId)
+    }
 }

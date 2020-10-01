@@ -49,6 +49,12 @@ class ProductRepository(
         return product
     }
 
+    suspend fun invertFavoriteState(productId: Int) {
+        withContext(Dispatchers.IO) {
+            database.productDao().invertFavoriteState(productId)
+        }
+    }
+
     companion object {
         private const val INITIAL_LOAD_SIZE = 1
         private const val PAGE_SIZE = 10

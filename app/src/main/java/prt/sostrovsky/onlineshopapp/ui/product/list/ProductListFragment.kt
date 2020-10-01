@@ -28,6 +28,7 @@ class ProductListFragment : Fragment() {
 
     private val adapter = ProductListAdapter()
     private var getProductsJob: Job? = null
+    private var changeFavoriteStateJob: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,6 +69,10 @@ class ProductListFragment : Fragment() {
             itemClick = { productId ->
                 showProduct(productId)
             }
+
+            favoritesClick = { productId ->
+                changeFavoriteState(productId)
+            }
         }
 
         adapter.addLoadStateListener { loadState ->
@@ -79,6 +84,13 @@ class ProductListFragment : Fragment() {
             binding.clLoadDataError.tvErrorText.isVisible =
                 loadState.source.refresh is LoadState.Error
             binding.clLoadDataError.btnRetry.isVisible = loadState.source.refresh is LoadState.Error
+        }
+    }
+
+    private fun changeFavoriteState(productId: Int) {
+        changeFavoriteStateJob?.cancel()
+        changeFavoriteStateJob = lifecycleScope.launch {
+            viewModel.invertFavoriteState(productId)
         }
     }
 

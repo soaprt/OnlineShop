@@ -1,5 +1,6 @@
 package prt.sostrovsky.onlineshopapp.database
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
@@ -13,7 +14,8 @@ data class ProductDTO(
     @field:SerializedName("image") val image_url: String,
     @field:SerializedName("price") val price: Int,
     @field:SerializedName("sale_precent") val sale_percent: Int = 0,
-    @field:SerializedName("details") val details: String
+    @field:SerializedName("details") val details: String,
+    @field:ColumnInfo(name = "favorite_state") val favorite_state: Int = 0
 )
 
 fun ProductDTO.asDomainModel(): Product {
@@ -24,6 +26,7 @@ fun ProductDTO.asDomainModel(): Product {
         imageUrl = image_url,
         price = price,
         salePercent = sale_percent,
-        details = details
+        details = details,
+        isFavorite = (favorite_state == 1)
     )
 }

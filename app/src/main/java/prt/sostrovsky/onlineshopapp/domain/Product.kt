@@ -2,13 +2,16 @@ package prt.sostrovsky.onlineshopapp.domain
 
 import kotlin.math.roundToInt
 
-data class Product(val id: Int,
-                   val title: String,
-                   val shortDescription: String,
-                   val imageUrl: String,
-                   val price: Int,
-                   val salePercent: Int = 0,
-                   val details: String) {
+data class Product(
+    val id: Int,
+    val title: String,
+    val shortDescription: String,
+    val imageUrl: String,
+    val price: Int,
+    val salePercent: Int = 0,
+    val details: String,
+    val isFavorite: Boolean
+) {
 
     val newPrice: String
         get() = "$ $price${if (salePercent > 0) ",-" else ""}"
@@ -25,7 +28,7 @@ data class Product(val id: Int,
 
     override fun toString(): String {
         return "Product(id=$id, title='$title', shortDescription='$shortDescription', " +
-                "imageUrl='$imageUrl', price=$price, salePercent=$salePercent, details='$details'," +
-                "newPrice='$newPrice', oldPrice='$oldPrice')"
+                "imageUrl='$imageUrl', price=$price, salePercent=$salePercent, " +
+                "details='$details', isFavorite=$isFavorite)"
     }
 }

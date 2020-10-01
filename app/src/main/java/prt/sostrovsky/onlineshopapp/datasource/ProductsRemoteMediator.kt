@@ -22,15 +22,9 @@ class ProductsRemoteMediator(
         state: PagingState<Int, ProductDTO>
     ): MediatorResult {
         val offset = when (loadType) {
-            LoadType.REFRESH -> {
-                0
-            }
-            LoadType.PREPEND -> {
-                0
-            }
-            LoadType.APPEND -> {
-                getOffsetForAppend()
-            }
+            LoadType.REFRESH -> 0
+            LoadType.PREPEND -> 0
+            LoadType.APPEND -> getOffsetForAppend()
         }
 
         try {
@@ -42,9 +36,8 @@ class ProductsRemoteMediator(
 
                     if (response.isSuccessful) {
                         products.addAll(response.body()!!)
+                        database.productDao().insertAll(products)
                     }
-
-                    database.productDao().insertAll(products)
                 }
             }
             return MediatorResult.Success(endOfPaginationReached = products.isEmpty())
