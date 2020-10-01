@@ -22,12 +22,27 @@ class ProductDetailsFragment : SecondaryFragment(R.layout.fragment_product_detai
     private lateinit var viewModel: ProductViewModel
     private val passedArgs: ProductDetailsFragmentArgs by navArgs()
     private var getProductJob: Job? = null
+    private var changeFavoriteStateJob: Job? = null
 
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setViewModel()
+        setFavoriteButton()
         getProduct()
+    }
+
+    private fun setFavoriteButton() {
+        cbFavorite.setOnClickListener{
+            invertFavoriteState(passedArgs.productId)
+        }
+    }
+
+    private fun invertFavoriteState(productId: Int) {
+        changeFavoriteStateJob?.cancel()
+        changeFavoriteStateJob = lifecycleScope.launch {
+            viewModel.invertFavoriteState(productId)
+        }
     }
 
     @ExperimentalCoroutinesApi
@@ -54,6 +69,7 @@ class ProductDetailsFragment : SecondaryFragment(R.layout.fragment_product_detai
             .load(product.imageUrl)
             .placeholder(R.drawable.ic_placeholder)
             .into(ivProductImage)
+        cbFavorite.isChecked = product.isFavorite
         tvProductTitle.text = product.title
         tvProductShortDescription.text = product.shortDescription
         tvProductNewPrice.text = product.newPrice

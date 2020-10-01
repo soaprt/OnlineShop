@@ -71,7 +71,7 @@ class ProductListFragment : Fragment() {
             }
 
             favoritesClick = { productId ->
-                changeFavoriteState(productId)
+                invertFavoriteState(productId)
             }
         }
 
@@ -87,7 +87,7 @@ class ProductListFragment : Fragment() {
         }
     }
 
-    private fun changeFavoriteState(productId: Int) {
+    private fun invertFavoriteState(productId: Int) {
         changeFavoriteStateJob?.cancel()
         changeFavoriteStateJob = lifecycleScope.launch {
             viewModel.invertFavoriteState(productId)
