@@ -8,8 +8,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import prt.sostrovsky.onlineshopapp.database.OnlineShopDatabase
 import prt.sostrovsky.onlineshopapp.database.ProductDTO
-import prt.sostrovsky.onlineshopapp.datasource.product_paging.ProductPagingSource
-import prt.sostrovsky.onlineshopapp.datasource.product_paging.ProductPagingRemoteMediator
 import prt.sostrovsky.onlineshopapp.domain.Product
 import prt.sostrovsky.onlineshopapp.remote.ProductApi
 
@@ -19,21 +17,19 @@ class ProductRepository(
     private val database: OnlineShopDatabase
 ) {
     fun getProducts(): Flow<PagingData<ProductDTO>> {
+        val pagingSourceFactory = { database.productDao().getProducts() }
+
         return Pager(
             config = PagingConfig(
                 initialLoadSize = INITIAL_LOAD_SIZE,
                 pageSize = PAGE_SIZE,
                 enablePlaceholders = false
             ),
-            remoteMediator = ProductPagingRemoteMediator(
+            remoteMediator = ProductsRemoteMediator(
                 api,
                 database
             ),
-            pagingSourceFactory = {
-                ProductPagingSource(
-                    database
-                )
-            }
+            pagingSourceFactory = pagingSourceFactory
         ).flow
     }
 

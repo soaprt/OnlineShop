@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.datasource.product_paging
+package prt.sostrovsky.onlineshopapp.datasource
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -13,7 +13,7 @@ import retrofit2.HttpException
 import java.io.IOException
 
 @OptIn(ExperimentalPagingApi::class)
-class ProductPagingRemoteMediator(
+class ProductsRemoteMediator(
     private val api: ProductApi,
     private val database: OnlineShopDatabase
 ) : RemoteMediator<Int, ProductDTO>() {
@@ -45,7 +45,6 @@ class ProductPagingRemoteMediator(
                     }
 
                     database.productDao().insertAll(products)
-                    val rowsInDB = database.productDao().getProductsAmount()
                 }
             }
             return MediatorResult.Success(endOfPaginationReached = products.isEmpty())
@@ -57,7 +56,7 @@ class ProductPagingRemoteMediator(
     }
 
     private suspend fun getOffsetForAppend(): Int {
-        var result = mutableListOf<Int>()
+        val result = mutableListOf<Int>()
 
         withContext(Dispatchers.IO) {
             result.add(database.productDao().getProductsAmount())
