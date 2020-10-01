@@ -10,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:padding="@dimen/indent_16dp">
+        android:paddingHorizontal="@dimen/indent_16dp"
+        android:paddingTop="@dimen/indent_8dp"
+        android:paddingBottom="@dimen/indent_16dp">
 
         <include
             android:id="@+id/clProductShortData"

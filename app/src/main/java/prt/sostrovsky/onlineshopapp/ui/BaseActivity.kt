@@ -3,6 +3,7 @@ package prt.sostrovsky.onlineshopapp.ui
 import android.annotation.SuppressLint
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -12,11 +13,11 @@ import io.reactivex.disposables.Disposable
 import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.network.connection.NetworkConnection
 
-open class BaseActivity(private val rootLayoutId: Int) : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity() {
     lateinit var navController: NavController
     lateinit var toolbarBackButton: FrameLayout
+    lateinit var offlineBar : TextView
 
-    private var snackBarOffline: Snackbar? = null
     private var networkDisposable: Disposable? = null
 
     override fun onResume() {
@@ -39,8 +40,8 @@ open class BaseActivity(private val rootLayoutId: Int) : AppCompatActivity() {
 
     private fun checkOffline(isOffline: Boolean) {
         when (isOffline) {
-            true -> hideShackBarOffline()
-            false -> showShackBarOffline()
+            true -> hideOfflineBar()
+            false -> showOfflineBar()
         }
     }
 
@@ -48,17 +49,12 @@ open class BaseActivity(private val rootLayoutId: Int) : AppCompatActivity() {
         networkDisposable?.dispose()
     }
 
-    private fun showShackBarOffline() {
-        val message = getString(R.string.msg_you_are_offline)
+    private fun showOfflineBar() {
+        offlineBar.visibility = View.VISIBLE
+    }
 
-        snackBarOffline = generateSnackBar(
-            findViewById(rootLayoutId), message,
-            Snackbar.LENGTH_INDEFINITE
-        )
-        snackBarOffline?.let {
-            it.duration = Snackbar.LENGTH_INDEFINITE
-            it.show()
-        }
+    private fun hideOfflineBar() {
+        offlineBar.visibility = View.GONE
     }
 
     private fun generateSnackBar(view: View, message: String, duration: Int): Snackbar {
@@ -67,10 +63,6 @@ open class BaseActivity(private val rootLayoutId: Int) : AppCompatActivity() {
         snackBarView.setBackgroundColor(applicationContext.resources.getColor(R.color.colorPrimary))
 
         return result
-    }
-
-    private fun hideShackBarOffline() {
-        snackBarOffline?.dismiss()
     }
 
     fun backButtonEnable(callback: OnBackPressedCallback) {
