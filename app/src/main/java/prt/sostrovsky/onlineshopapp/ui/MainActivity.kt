@@ -5,12 +5,13 @@ import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import prt.sostrovsky.onlineshopapp.R
 
-class MainActivity : BaseActivity(R.id.rootLayout) {
+class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setNavController()
         setToolBar()
+        setOfflineBar()
     }
 
     private fun setNavController() {
@@ -25,5 +26,9 @@ class MainActivity : BaseActivity(R.id.rootLayout) {
 
     private fun setToolbarButtons() {
         toolbarBackButton = findViewById(R.id.flToolbarLeftButton)
+    }
+
+    private fun setOfflineBar() {
+        offlineBar = findViewById(R.id.tvOfflineText)
     }
 }
