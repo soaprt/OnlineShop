@@ -4,14 +4,16 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import prt.sostrovsky.onlineshopapp.database.dao.FavoriteDao
 import prt.sostrovsky.onlineshopapp.database.dao.ProductDao
 
 @Database(
-    entities = [ProductDTO::class],
+    entities = [FavoriteDTO::class, ProductDTO::class],
     version = 1,
     exportSchema = false
 )
 abstract class OnlineShopDatabase : RoomDatabase() {
+    abstract fun favoritesDao(): FavoriteDao
     abstract fun productDao(): ProductDao
 
     companion object {

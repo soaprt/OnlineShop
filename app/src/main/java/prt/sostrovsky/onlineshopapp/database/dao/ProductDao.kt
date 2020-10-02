@@ -1,7 +1,10 @@
 package prt.sostrovsky.onlineshopapp.database.dao
 
 import androidx.paging.PagingSource
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import prt.sostrovsky.onlineshopapp.database.ProductDTO
 
 @Dao
@@ -17,4 +20,7 @@ interface ProductDao {
 
     @Query("SELECT * FROM product WHERE id = :productId")
     fun getProductById(productId: Int): ProductDTO?
+
+    @Query("SELECT * FROM product pr, favorites fav WHERE pr.id = fav.product_id AND fav.favorite_state = 1")
+    fun getFavoriteProducts(): List<ProductDTO>
 }

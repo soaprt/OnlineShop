@@ -12,12 +12,14 @@ import prt.sostrovsky.onlineshopapp.domain.Product
 
 class ProductListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var itemClick: ((Int) -> Unit)? = null
+    var favoritesClick: ((Int) -> Unit)? = null
 
     fun bindView(product: Product) {
         Glide.with(itemView.ivProductImage.context)
             .load(product.imageUrl)
             .placeholder(R.drawable.ic_placeholder)
             .into(itemView.ivProductImage)
+        itemView.cbFavorite.isChecked = product.isFavorite
         itemView.tvProductTitle.text = product.title
         itemView.tvProductShortDescription.text = product.shortDescription
         itemView.tvProductNewPrice.text = product.newPrice
@@ -25,6 +27,10 @@ class ProductListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         itemView.setOnClickListener {
             itemClick?.invoke(product.id)
+        }
+
+        itemView.cbFavorite.setOnClickListener {
+            favoritesClick?.invoke(product.id)
         }
     }
 

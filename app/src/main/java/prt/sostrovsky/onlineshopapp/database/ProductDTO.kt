@@ -3,7 +3,6 @@ package prt.sostrovsky.onlineshopapp.database
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import prt.sostrovsky.onlineshopapp.domain.Product
 
 @Entity(tableName = "product")
 data class ProductDTO(
@@ -16,14 +15,6 @@ data class ProductDTO(
     @field:SerializedName("details") val details: String
 )
 
-fun ProductDTO.asDomainModel(): Product {
-    return Product(
-        id = id,
-        title = title,
-        shortDescription = short_description,
-        imageUrl = image_url,
-        price = price,
-        salePercent = sale_percent,
-        details = details
-    )
+fun ProductDTO.asFavoritesDTO(): FavoriteDTO {
+    return FavoriteDTO(product_id = id)
 }

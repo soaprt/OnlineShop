@@ -6,8 +6,7 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import prt.sostrovsky.onlineshopapp.database.OnlineShopDatabase
-import prt.sostrovsky.onlineshopapp.database.ProductDTO
+import prt.sostrovsky.onlineshopapp.database.*
 import prt.sostrovsky.onlineshopapp.remote.ProductApi
 import retrofit2.HttpException
 import java.io.IOException
@@ -22,15 +21,9 @@ class ProductsRemoteMediator(
         state: PagingState<Int, ProductDTO>
     ): MediatorResult {
         val offset = when (loadType) {
-            LoadType.REFRESH -> {
-                0
-            }
-            LoadType.PREPEND -> {
-                0
-            }
-            LoadType.APPEND -> {
-                getOffsetForAppend()
-            }
+            LoadType.REFRESH -> 0
+            LoadType.PREPEND -> 0
+            LoadType.APPEND -> getOffsetForAppend()
         }
 
         try {
@@ -42,9 +35,12 @@ class ProductsRemoteMediator(
 
                     if (response.isSuccessful) {
                         products.addAll(response.body()!!)
-                    }
+                        database.productDao().insertAll(products)
 
-                    database.productDao().insertAll(products)
+                        database.favoritesDao().insertAll(products.map {
+                            it.asFavoritesDTO()
+                        })
+                    }
                 }
             }
             return MediatorResult.Success(endOfPaginationReached = products.isEmpty())

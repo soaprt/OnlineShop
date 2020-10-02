@@ -10,11 +10,16 @@ class ProductListAdapter :
     PagingDataAdapter<Product, RecyclerView.ViewHolder>(PRODUCT_COMPARATOR) {
 
     var itemClick: ((Int) -> Unit)? = null
+    var favoritesClick: ((Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ProductListViewHolder.create(parent).apply {
             itemClick = { productId ->
                 this@ProductListAdapter.itemClick?.invoke(productId)
+            }
+
+            favoritesClick = { productId ->
+                this@ProductListAdapter.favoritesClick?.invoke(productId)
             }
         }
     }

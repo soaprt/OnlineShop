@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import prt.sostrovsky.onlineshopapp.databinding.FragmentProductListBinding
 import prt.sostrovsky.onlineshopapp.ui.MainActivity
+import prt.sostrovsky.onlineshopapp.ui.product.favorites.FavoriteListFragment
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModel
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModelInjection
 import prt.sostrovsky.onlineshopapp.ui.product.details.ProductDetailsFragment
@@ -24,9 +25,10 @@ import prt.sostrovsky.onlineshopapp.ui.product.list.load_state.ProductLoadStateA
 class ProductListFragment : Fragment() {
     private lateinit var binding: FragmentProductListBinding
     private lateinit var viewModel: ProductViewModel
-    private val adapter = ProductListAdapter()
 
+    private val adapter = ProductListAdapter()
     private var getProductsJob: Job? = null
+    private var changeFavoriteStateJob: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +41,7 @@ class ProductListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setViewModel()
+        setBackStackChangeListener()
         setRecyclerView()
         setRetryButton()
         getProducts()
@@ -66,6 +69,10 @@ class ProductListFragment : Fragment() {
             itemClick = { productId ->
                 showProduct(productId)
             }
+
+            favoritesClick = { productId ->
+                invertFavoriteState(productId)
+            }
         }
 
         adapter.addLoadStateListener { loadState ->
@@ -74,8 +81,16 @@ class ProductListFragment : Fragment() {
             // Show loading spinner during initial load or refresh.
             binding.pgLoad.isVisible = loadState.source.refresh is LoadState.Loading
             // Show the retry state if initial load or refresh fails.
-            binding.clLoadDataError.tvErrorText.isVisible = loadState.source.refresh is LoadState.Error
+            binding.clLoadDataError.tvErrorText.isVisible =
+                loadState.source.refresh is LoadState.Error
             binding.clLoadDataError.btnRetry.isVisible = loadState.source.refresh is LoadState.Error
+        }
+    }
+
+    private fun invertFavoriteState(productId: Int) {
+        changeFavoriteStateJob?.cancel()
+        changeFavoriteStateJob = lifecycleScope.launch {
+            viewModel.invertFavoriteState(productId)
         }
     }
 
@@ -94,6 +109,24 @@ class ProductListFragment : Fragment() {
 
     private fun setToolbarButtons() {
         (activity as MainActivity).backButtonDisable()
+        enableFavoritesButton()
+    }
+
+
+    private fun enableFavoritesButton() {
+        (activity as MainActivity).favoritesButtonEnable(callback = View.OnClickListener {
+            showFavorites()
+        })
+    }
+
+    private fun setBackStackChangeListener() {
+        requireActivity().supportFragmentManager.apply {
+            addOnBackStackChangedListener {
+                if (backStackEntryCount == 0) {
+                    enableFavoritesButton()
+                }
+            }
+        }
     }
 
     private fun showProduct(productId: Int) {
@@ -103,5 +136,10 @@ class ProductListFragment : Fragment() {
             }
         }
         (activity as MainActivity).addFragmentToBackStack(detailsFragment)
+    }
+
+    private fun showFavorites() {
+        val favoritesFragment = FavoriteListFragment()
+        (activity as MainActivity).addFragmentToBackStack(favoritesFragment)
     }
 }

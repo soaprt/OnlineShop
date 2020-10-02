@@ -25,7 +25,8 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setToolbarButtons() {
-        toolbarBackButton = findViewById(R.id.flToolbarLeftButton)
+        toolbarBackButton = findViewById(R.id.flToolbarBackButton)
+        toolbarFavoritesButton = findViewById(R.id.flToolbarFavoritesButton)
     }
 
     private fun setOfflineBar() {
