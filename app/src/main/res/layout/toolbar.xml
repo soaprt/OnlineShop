@@ -59,23 +59,23 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/toolbar_button_size"
             android:layout_gravity="center_horizontal|end"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingVertical="@dimen/indent_8dp"
             android:paddingStart="@dimen/indent_8dp"
             android:paddingEnd="@dimen/indent_2dp"
-            android:paddingVertical="@dimen/indent_8dp"
-            android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivAppLogo"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:focusable="true">
+            app:layout_constraintStart_toEndOf="@+id/ivAppLogo"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/ivFavorites"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/favorites"
                 android:layout_gravity="center_horizontal|end"
-                android:src="@drawable/favorites_toolbar" />
+                android:contentDescription="@string/favorites"
+                android:src="@drawable/ic_favorites_toolbar" />
 
         </FrameLayout>
 

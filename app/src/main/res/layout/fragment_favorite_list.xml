@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:paddingHorizontal="@dimen/indent_16dp"
     tools:context=".ui.product.favorites.FavoriteListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
