@@ -19,21 +19,20 @@ import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModel
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModelInjection
 
 class ProductDetailsFragment : SecondaryFragment(R.layout.fragment_product_details) {
-    private lateinit var viewModel: ProductViewModel
     private val passedArgs: ProductDetailsFragmentArgs by navArgs()
-    private var getProductJob: Job? = null
+
     private var changeFavoriteStateJob: Job? = null
+    private var getProductJob: Job? = null
 
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setViewModel()
         setFavoriteButton()
         getProduct()
     }
 
     private fun setFavoriteButton() {
-        cbFavorite.setOnClickListener{
+        cbFavorite.setOnClickListener {
             invertFavoriteState(passedArgs.productId)
         }
     }
@@ -43,15 +42,6 @@ class ProductDetailsFragment : SecondaryFragment(R.layout.fragment_product_detai
         changeFavoriteStateJob = lifecycleScope.launch {
             viewModel.invertFavoriteState(productId)
         }
-    }
-
-    @ExperimentalCoroutinesApi
-    private fun setViewModel() {
-        viewModel = ViewModelProvider(
-            this,
-            ProductViewModelInjection.provideViewModelFactory(requireContext())
-        )
-            .get(ProductViewModel::class.java)
     }
 
     @ExperimentalCoroutinesApi

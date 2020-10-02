@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/productListFragment"
         android:name="prt.sostrovsky.onlineshopapp.ui.product.list.ProductListFragment"
-        tools:layout="@layout/fragment_product_list" >
+        tools:layout="@layout/fragment_product_list">
         <action
             android:id="@+id/action_productListFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="prt.sostrovsky.onlineshopapp.ui.product.favorites.FavoritesFragment">
+        android:name="prt.sostrovsky.onlineshopapp.ui.product.favorites.FavoriteListFragment">
         <action
             android:id="@+id/action_favoritesFragment_to_productListFragment"
             app:destination="@id/productListFragment"

@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "favorites")
-data class FavoritesDTO(
+data class FavoriteDTO(
     @PrimaryKey @field:ColumnInfo(name = "product_id") val product_id: Int,
     @field:ColumnInfo(name = "favorite_state") var favorite_state: Int = 0
 ) {

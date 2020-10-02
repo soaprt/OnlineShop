@@ -20,4 +20,7 @@ interface ProductDao {
 
     @Query("SELECT * FROM product WHERE id = :productId")
     fun getProductById(productId: Int): ProductDTO?
+
+    @Query("SELECT * FROM product pr, favorites fav WHERE pr.id = fav.product_id AND fav.favorite_state = 1")
+    fun getFavoriteProducts(): List<ProductDTO>
 }

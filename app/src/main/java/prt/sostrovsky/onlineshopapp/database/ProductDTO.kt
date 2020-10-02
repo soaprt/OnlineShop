@@ -15,6 +15,6 @@ data class ProductDTO(
     @field:SerializedName("details") val details: String
 )
 
-fun ProductDTO.asFavoritesDTO(): FavoritesDTO {
-    return FavoritesDTO(product_id = id)
+fun ProductDTO.asFavoritesDTO(): FavoriteDTO {
+    return FavoriteDTO(product_id = id)
 }

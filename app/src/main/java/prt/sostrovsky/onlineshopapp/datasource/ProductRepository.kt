@@ -28,7 +28,7 @@ class ProductRepository(
         }
     }
 
-    private suspend fun asProduct(productDTO: ProductDTO) : Product {
+    private suspend fun asProduct(productDTO: ProductDTO): Product {
         val isFavorite = (getProductFavoriteState(productDTO.id) == 1)
 
         return Product(
@@ -93,6 +93,18 @@ class ProductRepository(
                 database.favoritesDao().update(it)
             }
         }
+    }
+
+    suspend fun getFavorites(): List<Product> {
+        val favorites = mutableListOf<Product>()
+
+        withContext(Dispatchers.IO) {
+            favorites.addAll(database.productDao().getFavoriteProducts().map {
+                asProduct(it)
+            })
+        }
+
+        return favorites
     }
 
     companion object {

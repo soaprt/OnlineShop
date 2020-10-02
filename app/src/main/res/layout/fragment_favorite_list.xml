@@ -5,7 +5,9 @@
     android:id="@+id/favoritesBlock"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.product.favorites.FavoritesFragment">
+    android:background="@android:color/white"
+    android:paddingHorizontal="@dimen/indent_16dp"
+    tools:context=".ui.product.favorites.FavoriteListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFavorites"
@@ -22,13 +24,16 @@
 
     <TextView
         android:id="@+id/tvEmptyList"
+        style="@style/NewPriceTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/label_no_data"
+        android:text="@string/label_empty_favorites"
+        android:textAlignment="center"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
