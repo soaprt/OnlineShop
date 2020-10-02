@@ -11,10 +11,10 @@ import prt.sostrovsky.onlineshopapp.R
 import prt.sostrovsky.onlineshopapp.UiComponentsUtil
 import prt.sostrovsky.onlineshopapp.domain.Product
 
-class FavoriteListAdapter(private val favorites: ArrayList<Product>) :
+class FavoriteListAdapter(private var favorites: ArrayList<Product>) :
     RecyclerView.Adapter<FavoriteListAdapter.FavoriteHolder>() {
 
-    var favoritesClick: ((Int) -> Unit)? = null
+    var favoritesClick: ((Int, Boolean) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -22,8 +22,9 @@ class FavoriteListAdapter(private val favorites: ArrayList<Product>) :
     ): FavoriteHolder {
         val inflatedView = parent.inflate(R.layout.product_short_data, false)
         return FavoriteHolder(inflatedView).apply {
-            favoritesClick = { productId ->
-                this@FavoriteListAdapter.favoritesClick?.invoke(productId)
+            favoritesClick = { productId, position ->
+                removeProduct(position)
+                this@FavoriteListAdapter.favoritesClick?.invoke(productId, favorites.size == 0)
             }
         }
     }
@@ -35,8 +36,14 @@ class FavoriteListAdapter(private val favorites: ArrayList<Product>) :
         holder.bindView(itemFavorite)
     }
 
+    private fun removeProduct(position: Int) {
+        favorites.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, favorites.size)
+    }
+
     class FavoriteHolder(v: View) : RecyclerView.ViewHolder(v) {
-        var favoritesClick: ((Int) -> Unit)? = null
+        var favoritesClick: ((Int, Int) -> Unit)? = null
 
         fun bindView(product: Product) {
             Glide.with(itemView.ivProductImage.context)
@@ -50,7 +57,7 @@ class FavoriteListAdapter(private val favorites: ArrayList<Product>) :
             UiComponentsUtil.strikeLineThrough(itemView.tvProductOldPrice, product.oldPrice)
 
             itemView.cbFavorite.setOnClickListener {
-                favoritesClick?.invoke(product.id)
+                favoritesClick?.invoke(product.id, position)
             }
         }
     }
