@@ -1,4 +1,4 @@
-package prt.sostrovsky.onlineshopapp.ui.favorites
+package prt.sostrovsky.onlineshopapp.ui.product.favorites
 
 import android.os.Bundle
 import android.view.View

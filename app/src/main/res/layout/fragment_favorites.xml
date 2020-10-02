@@ -5,7 +5,7 @@
     android:id="@+id/favoritesBlock"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.favorites.FavoritesFragment">
+    tools:context=".ui.product.favorites.FavoritesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFavorites"

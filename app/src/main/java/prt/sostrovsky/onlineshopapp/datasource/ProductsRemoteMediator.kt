@@ -6,8 +6,7 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import prt.sostrovsky.onlineshopapp.database.OnlineShopDatabase
-import prt.sostrovsky.onlineshopapp.database.ProductDTO
+import prt.sostrovsky.onlineshopapp.database.*
 import prt.sostrovsky.onlineshopapp.remote.ProductApi
 import retrofit2.HttpException
 import java.io.IOException
@@ -37,6 +36,10 @@ class ProductsRemoteMediator(
                     if (response.isSuccessful) {
                         products.addAll(response.body()!!)
                         database.productDao().insertAll(products)
+
+                        database.favoritesDao().insertAll(products.map {
+                            it.asFavoritesDTO()
+                        })
                     }
                 }
             }

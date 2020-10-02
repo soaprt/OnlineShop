@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="prt.sostrovsky.onlineshopapp.ui.favorites.FavoritesFragment">
+        android:name="prt.sostrovsky.onlineshopapp.ui.product.favorites.FavoritesFragment">
         <action
             android:id="@+id/action_favoritesFragment_to_productListFragment"
             app:destination="@id/productListFragment"

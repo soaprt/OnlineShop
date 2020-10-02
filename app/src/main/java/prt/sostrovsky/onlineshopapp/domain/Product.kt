@@ -10,7 +10,7 @@ data class Product(
     val price: Int,
     val salePercent: Int = 0,
     val details: String,
-    val isFavorite: Boolean
+    val isFavorite: Boolean = false
 ) {
 
     val newPrice: String

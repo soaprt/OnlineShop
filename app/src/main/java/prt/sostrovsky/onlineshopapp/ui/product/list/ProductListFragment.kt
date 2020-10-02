@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import prt.sostrovsky.onlineshopapp.databinding.FragmentProductListBinding
 import prt.sostrovsky.onlineshopapp.ui.MainActivity
-import prt.sostrovsky.onlineshopapp.ui.favorites.FavoritesFragment
+import prt.sostrovsky.onlineshopapp.ui.product.favorites.FavoritesFragment
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModel
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModelInjection
 import prt.sostrovsky.onlineshopapp.ui.product.details.ProductDetailsFragment

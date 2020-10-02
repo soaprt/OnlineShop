@@ -1,12 +1,15 @@
 package prt.sostrovsky.onlineshopapp.database.dao
 
 import androidx.paging.PagingSource
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import prt.sostrovsky.onlineshopapp.database.ProductDTO
 
 @Dao
 interface ProductDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(products: List<ProductDTO>)
 
     @Query("SELECT COUNT(*) FROM product")
@@ -17,15 +20,4 @@ interface ProductDao {
 
     @Query("SELECT * FROM product WHERE id = :productId")
     fun getProductById(productId: Int): ProductDTO?
-
-    @Query("UPDATE product SET favorite_state = :favoriteState WHERE id = :productId")
-    suspend fun updateFavoriteState(productId: Int, favoriteState: Int)
-
-    @Transaction
-    suspend fun invertFavoriteState(productId: Int) {
-        getProductById(productId)?.let {
-            val newFavoriteState = if (it.favorite_state == 1) 0 else 1
-            updateFavoriteState(productId, newFavoriteState)
-        }
-    }
 }
