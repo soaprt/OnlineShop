@@ -13,7 +13,6 @@ import prt.sostrovsky.onlineshopapp.ui.SecondaryFragment
 
 class FavoriteListFragment : SecondaryFragment(R.layout.fragment_favorite_list) {
     private var getFavoritesJob: Job? = null
-    private var changeFavoriteStateJob: Job? = null
 
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -21,6 +20,7 @@ class FavoriteListFragment : SecondaryFragment(R.layout.fragment_favorite_list) 
         getFavorites()
     }
 
+    @ExperimentalCoroutinesApi
     private fun getFavorites() {
         getFavoritesJob?.cancel()
         getFavoritesJob = lifecycleScope.launch {
@@ -34,11 +34,13 @@ class FavoriteListFragment : SecondaryFragment(R.layout.fragment_favorite_list) 
         }
     }
 
+    @ExperimentalCoroutinesApi
     private fun showFavorites(list: List<Product>) {
         val adapter = FavoriteListAdapter(list as ArrayList<Product>)
         rvFavorites.adapter = adapter.apply {
-            favoritesClick = { productId, listIsEmpty ->
-                invertFavoriteState(productId)
+            favoritesClick = { product, listIsEmpty ->
+                product.invertFavoriteState()
+                saveFavoriteState(product)
 
                 if (listIsEmpty) showEmptyMessage()
             }
@@ -50,10 +52,8 @@ class FavoriteListFragment : SecondaryFragment(R.layout.fragment_favorite_list) 
         tvEmptyList.visibility = View.VISIBLE
     }
 
-    private fun invertFavoriteState(productId: Int) {
-        changeFavoriteStateJob?.cancel()
-        changeFavoriteStateJob = lifecycleScope.launch {
-            viewModel.invertFavoriteState(productId)
-        }
+    @ExperimentalCoroutinesApi
+    private fun saveFavoriteState(product: Product) {
+        super.saveFavoriteState(product.id, product.isFavorite)
     }
 }

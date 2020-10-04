@@ -5,12 +5,13 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import prt.sostrovsky.onlineshopapp.domain.Product
+import prt.sostrovsky.onlineshopapp.domain.ProductFavority
 
 class ProductListAdapter :
     PagingDataAdapter<Product, RecyclerView.ViewHolder>(PRODUCT_COMPARATOR) {
 
     var itemClick: ((Int) -> Unit)? = null
-    var favoritesClick: ((Int) -> Unit)? = null
+    var favoritesClick: ((Product) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ProductListViewHolder.create(parent).apply {
@@ -18,8 +19,8 @@ class ProductListAdapter :
                 this@ProductListAdapter.itemClick?.invoke(productId)
             }
 
-            favoritesClick = { productId ->
-                this@ProductListAdapter.favoritesClick?.invoke(productId)
+            favoritesClick = { product ->
+                this@ProductListAdapter.favoritesClick?.invoke(product)
             }
         }
     }
@@ -31,6 +32,21 @@ class ProductListAdapter :
         val product = getItem(position)
         if (product != null) {
             (holder as ProductListViewHolder).bindView(product)
+        }
+    }
+
+    fun updateItem(productFavority: ProductFavority) {
+        val adapter = this@ProductListAdapter
+
+        for (itemPosition in 0 until adapter.itemCount) {
+            val listProduct = adapter.peek(itemPosition)
+
+            listProduct?.let {
+                if (listProduct.id == productFavority.product_id) {
+                    listProduct.isFavorite = productFavority.isFavorite
+                    notifyItemChanged(itemPosition)
+                }
+            }
         }
     }
 

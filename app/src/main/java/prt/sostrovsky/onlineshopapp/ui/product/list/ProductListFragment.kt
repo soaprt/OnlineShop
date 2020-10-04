@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -54,10 +55,13 @@ class ProductListFragment : Fragment() {
 
     private fun setViewModel() {
         viewModel = ViewModelProvider(
-            this,
+            requireActivity(),
             ProductViewModelInjection.provideViewModelFactory(requireContext())
-        )
-            .get(ProductViewModel::class.java)
+        ).get(ProductViewModel::class.java)
+
+        viewModel.changeFavoriteStateTo.observe(viewLifecycleOwner, Observer { data ->
+            adapter.updateItem(data)
+        })
     }
 
     private fun setRecyclerView() {
@@ -70,8 +74,9 @@ class ProductListFragment : Fragment() {
                 showProduct(productId)
             }
 
-            favoritesClick = { productId ->
-                invertFavoriteState(productId)
+            favoritesClick = { product ->
+                product.invertFavoriteState()
+                saveFavoriteState(product.id, product.isFavorite)
             }
         }
 
@@ -87,10 +92,10 @@ class ProductListFragment : Fragment() {
         }
     }
 
-    private fun invertFavoriteState(productId: Int) {
+    private fun saveFavoriteState(productId: Int, favoriteState: Boolean) {
         changeFavoriteStateJob?.cancel()
         changeFavoriteStateJob = lifecycleScope.launch {
-            viewModel.invertFavoriteState(productId)
+            viewModel.saveFavoriteState(productId, favoriteState)
         }
     }
 

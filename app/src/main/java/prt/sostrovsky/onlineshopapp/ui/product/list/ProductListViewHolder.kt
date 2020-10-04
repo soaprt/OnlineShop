@@ -12,7 +12,7 @@ import prt.sostrovsky.onlineshopapp.domain.Product
 
 class ProductListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     var itemClick: ((Int) -> Unit)? = null
-    var favoritesClick: ((Int) -> Unit)? = null
+    var favoritesClick: ((Product) -> Unit)? = null
 
     fun bindView(product: Product) {
         Glide.with(itemView.ivProductImage.context)
@@ -30,7 +30,7 @@ class ProductListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
 
         itemView.cbFavorite.setOnClickListener {
-            favoritesClick?.invoke(product.id)
+            favoritesClick?.invoke(product)
         }
     }
 
