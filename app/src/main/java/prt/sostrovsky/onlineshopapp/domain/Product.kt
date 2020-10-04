@@ -10,7 +10,7 @@ data class Product(
     val price: Int,
     val salePercent: Int = 0,
     val details: String,
-    val isFavorite: Boolean = false
+    var isFavorite: Boolean = false
 ) {
 
     val newPrice: String
@@ -24,6 +24,10 @@ data class Product(
     private fun getOldPrice(): Int {
         val percent = (price.toDouble() / 100)
         return (price + (percent * salePercent)).roundToInt()
+    }
+
+    fun invertFavoriteState() {
+        isFavorite = !isFavorite
     }
 
     override fun toString(): String {

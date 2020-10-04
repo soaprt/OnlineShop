@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.product_short_data.*
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModel
 import prt.sostrovsky.onlineshopapp.ui.product.ProductViewModelInjection
 
@@ -17,6 +18,7 @@ open class SecondaryFragment(private val layoutId: Int) : Fragment() {
     lateinit var viewModel: ProductViewModel
 
     private lateinit var backButtonCallback: OnBackPressedCallback
+    private var saveFavoriteStateJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +41,9 @@ open class SecondaryFragment(private val layoutId: Int) : Fragment() {
     @ExperimentalCoroutinesApi
     private fun setViewModel() {
         viewModel = ViewModelProvider(
-            this,
+            requireActivity(),
             ProductViewModelInjection.provideViewModelFactory(requireContext())
-        )
-            .get(ProductViewModel::class.java)
+        ).get(ProductViewModel::class.java)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -66,6 +67,14 @@ open class SecondaryFragment(private val layoutId: Int) : Fragment() {
         (activity as MainActivity).apply {
             backButtonEnable(callback = backButtonCallback)
             favoritesButtonDisable()
+        }
+    }
+
+    @ExperimentalCoroutinesApi
+    protected fun saveFavoriteState(productId: Int, favoriteState: Boolean) {
+        saveFavoriteStateJob?.cancel()
+        saveFavoriteStateJob = lifecycleScope.launch {
+            viewModel.saveFavoriteState(productId, favoriteState)
         }
     }
 }

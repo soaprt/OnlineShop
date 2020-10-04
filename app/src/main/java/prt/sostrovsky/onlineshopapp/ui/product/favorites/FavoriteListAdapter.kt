@@ -14,7 +14,7 @@ import prt.sostrovsky.onlineshopapp.domain.Product
 class FavoriteListAdapter(private var favorites: ArrayList<Product>) :
     RecyclerView.Adapter<FavoriteListAdapter.FavoriteHolder>() {
 
-    var favoritesClick: ((Int, Boolean) -> Unit)? = null
+    var favoritesClick: ((Product, Boolean) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -22,9 +22,9 @@ class FavoriteListAdapter(private var favorites: ArrayList<Product>) :
     ): FavoriteHolder {
         val inflatedView = parent.inflate(R.layout.product_short_data, false)
         return FavoriteHolder(inflatedView).apply {
-            favoritesClick = { productId, position ->
+            favoritesClick = { product, position ->
                 removeProduct(position)
-                this@FavoriteListAdapter.favoritesClick?.invoke(productId, favorites.size == 0)
+                this@FavoriteListAdapter.favoritesClick?.invoke(product, favorites.size == 0)
             }
         }
     }
@@ -43,7 +43,7 @@ class FavoriteListAdapter(private var favorites: ArrayList<Product>) :
     }
 
     class FavoriteHolder(v: View) : RecyclerView.ViewHolder(v) {
-        var favoritesClick: ((Int, Int) -> Unit)? = null
+        var favoritesClick: ((Product, Int) -> Unit)? = null
 
         fun bindView(product: Product) {
             Glide.with(itemView.ivProductImage.context)
@@ -57,7 +57,7 @@ class FavoriteListAdapter(private var favorites: ArrayList<Product>) :
             UiComponentsUtil.strikeLineThrough(itemView.tvProductOldPrice, product.oldPrice)
 
             itemView.cbFavorite.setOnClickListener {
-                favoritesClick?.invoke(product.id, position)
+                favoritesClick?.invoke(product, position)
             }
         }
     }
